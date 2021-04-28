@@ -5,8 +5,8 @@ import org.database.employee.EmployeeEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "schedule")
@@ -18,13 +18,13 @@ public class ScheduleEntity implements Serializable {
     private int id;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "time_from")
-    private Time timeFrom;
+    private LocalTime timeFrom;
 
     @Column(name="time_to")
-    private Time timeTo;
+    private LocalTime timeTo;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
@@ -35,7 +35,7 @@ public class ScheduleEntity implements Serializable {
     private DepartmentEntity department;
 
     public ScheduleEntity(){}
-    public ScheduleEntity(int id, Date date, Time timeFrom, Time timeTo, EmployeeEntity employee, DepartmentEntity department) {
+    public ScheduleEntity(int id, LocalDate date, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
         this.id = id;
         this.date = date;
         this.timeFrom = timeFrom;
@@ -52,27 +52,27 @@ public class ScheduleEntity implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTimeFrom() {
+    public LocalTime getTimeFrom() {
         return timeFrom;
     }
 
-    public void setTimeFrom(Time timeFrom) {
+    public void setTimeFrom(LocalTime timeFrom) {
         this.timeFrom = timeFrom;
     }
 
-    public Time getTimeTo() {
+    public LocalTime getTimeTo() {
         return timeTo;
     }
 
-    public void setTimeTo(Time timeTo) {
+    public void setTimeTo(LocalTime timeTo) {
         this.timeTo = timeTo;
     }
 

@@ -24,10 +24,10 @@
                            </image></ImageView>
                      </graphic>
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="usersButton" layoutX="10.0" layoutY="10.0" onAction="#openWindowUsers" prefHeight="70.0" prefWidth="225.0" text="Użytkownicy" textFill="#576271">
+                  <JFXButton fx:id="usersButton" layoutX="10.0" layoutY="10.0" onAction="#openWindowUsers" prefHeight="70.0" prefWidth="225.0" text="Użytkownicy " textFill="#576271">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -39,7 +39,7 @@
                         <Insets />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="patientButton" layoutX="20.0" layoutY="80.0" onAction="#openWindowPatients" prefHeight="70.0" prefWidth="225.0" text="Pacjenci" textFill="#576271">
+                  <JFXButton fx:id="patientButton" layoutX="10.0" layoutY="80.0" onAction="#openWindowPatients" prefHeight="70.0" prefWidth="225.0" text="Pacjenci     " textFill="#576271">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -51,11 +51,41 @@
                         <Insets />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="serviceButton" onAction="#openWindowService" layoutX="10.0" layoutY="150.0" prefHeight="70.0" prefWidth="225.0" text="Usługi" textFill="#576271">
+                  <JFXButton fx:id="serviceButton" layoutX="10.0" layoutY="150.0" onAction="#openWindowService" prefHeight="70.0" prefWidth="225.0" text="Usługi         " textFill="#576271">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@graphics/Service.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="departmentButton" layoutX="10.0" layoutY="220.0" onAction="#openWindowDepartment" prefHeight="70.0" prefWidth="225.0" text="Gabinety    " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/doctorOffice.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="specializationButton" layoutX="10.0" layoutY="290.0" onAction="#openWindowSpecialization" prefHeight="70.0" prefWidth="225.0" text="Specjalizacje" textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/special.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="scheduleButton" onAction="#openWindowSchedule" layoutX="10.0" layoutY="360.0" prefHeight="70.0" prefWidth="225.0" text="Grafik        " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/schedule.png" />
                            </image>
                         </ImageView>
                      </graphic>

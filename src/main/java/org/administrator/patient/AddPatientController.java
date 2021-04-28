@@ -13,12 +13,13 @@ import org.database.operation.CRUD;
 import org.database.patient.Patient;
 import org.database.patient.PatientEntity;
 import org.employee.Sex;
+import org.table.Add;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddPatientController implements Initializable {
+public class AddPatientController implements Initializable, Add {
 
     @FXML
     TextField firstNameTextField,
@@ -40,12 +41,12 @@ public class AddPatientController implements Initializable {
 
     CRUD<PatientEntity> patientEntityCRUD = new CRUD<>();
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sexComboBox.getItems().setAll(Sex.values());
     }
 
+    @Override
     public void setParentStackPane(StackPane parentStackPane) {
         this.parentStackPane = parentStackPane;
     }
@@ -71,7 +72,7 @@ public class AddPatientController implements Initializable {
         newPatient.setCreationDate((creationDateDatePicker.getValue()));
         newPatient.setBirtDate((birthDateDatePicker.getValue()));
 
-        if(patientEntityCRUD.save(newPatient,"pacjenta")){
+        if(patientEntityCRUD.save(newPatient)){
             try {
                 Stage stage = (Stage) saveButton.getScene().getWindow();
                 stage.close();

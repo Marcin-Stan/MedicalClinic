@@ -11,15 +11,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.administrator.schedule.Schedule;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardAdministratorController implements Initializable {
-
-    @FXML
-    JFXButton serviceButton;
 
     @FXML
     StackPane stackPanedashboard;
@@ -27,7 +26,11 @@ public class DashboardAdministratorController implements Initializable {
     public JFXButton homeScreenButton,
             usersButton,myAccountButton,
             logoutButton,
-            patientButton;
+            patientButton,
+            specializationButton,
+            departmentButton,
+            serviceButton,
+            scheduleButton;
     @FXML
     public StackPane stackPaneinside;
 
@@ -82,6 +85,9 @@ public class DashboardAdministratorController implements Initializable {
         homeScreenButton.setTextFill(Color.web("#576271"));
         patientButton.setTextFill(Color.web("#576271"));
         serviceButton.setTextFill(Color.web("#576271"));
+        departmentButton.setTextFill(Color.web("#576271"));
+        specializationButton.setTextFill(Color.web("#576271"));
+        scheduleButton.setTextFill(Color.web("#576271"));
     }
 
     @FXML
@@ -94,6 +100,9 @@ public class DashboardAdministratorController implements Initializable {
         usersButton.setTextFill(Color.web("#576271"));
         homeScreenButton.setTextFill(Color.web("#576271"));
         serviceButton.setTextFill(Color.web("#576271"));
+        departmentButton.setTextFill(Color.web("#576271"));
+        specializationButton.setTextFill(Color.web("#576271"));
+        scheduleButton.setTextFill(Color.web("#576271"));
     }
 
     @FXML
@@ -106,7 +115,51 @@ public class DashboardAdministratorController implements Initializable {
         homeScreenButton.setTextFill(Color.web("#576271"));
         patientButton.setTextFill(Color.web("#576271"));
         usersButton.setTextFill(Color.web("#576271"));
+        departmentButton.setTextFill(Color.web("#576271"));
+        specializationButton.setTextFill(Color.web("#576271"));
+        scheduleButton.setTextFill(Color.web("#576271"));
     }
+
+    @FXML
+    private void openWindowDepartment() throws IOException{
+        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/department/Department.fxml")));
+        stackPaneinside.getChildren().add(pane);
+
+        departmentButton.setTextFill(Color.web("#5fa1fc"));
+
+        homeScreenButton.setTextFill(Color.web("#576271"));
+        patientButton.setTextFill(Color.web("#576271"));
+        usersButton.setTextFill(Color.web("#576271"));
+        serviceButton.setTextFill(Color.web("#576271"));
+        specializationButton.setTextFill(Color.web("#576271"));
+        scheduleButton.setTextFill(Color.web("#576271"));
+    }
+
+    @FXML
+    private void openWindowSpecialization() throws IOException{
+        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/specialization/Specialization.fxml")));
+        stackPaneinside.getChildren().add(pane);
+
+        specializationButton.setTextFill(Color.web("#5fa1fc"));
+
+        homeScreenButton.setTextFill(Color.web("#576271"));
+        patientButton.setTextFill(Color.web("#576271"));
+        usersButton.setTextFill(Color.web("#576271"));
+        serviceButton.setTextFill(Color.web("#576271"));
+        departmentButton.setTextFill(Color.web("#576271"));
+        scheduleButton.setTextFill(Color.web("#576271"));
+    }
+
+
+    @FXML
+    private void openWindowSchedule() throws IOException{
+        Stage stage = new Stage();
+        Schedule schedule = new Schedule();
+        schedule.start(stage);
+
+    }
+
+
 
 
 
@@ -119,7 +172,7 @@ public class DashboardAdministratorController implements Initializable {
 
         Parent root = null;
         try {
-            root = FXMLLoader.load((getClass().getResource("loginWindow/login.fxml")));
+            root = FXMLLoader.load((Objects.requireNonNull(getClass().getResource("loginWindow/login.fxml"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

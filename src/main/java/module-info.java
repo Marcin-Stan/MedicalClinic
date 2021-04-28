@@ -1,5 +1,5 @@
 module org {
-    requires javafx.controls;
+    requires javafx.graphics;
     requires javafx.fxml;
     requires java.xml.bind;
     requires java.naming;
@@ -12,7 +12,8 @@ module org {
     requires javafx.swing;
     requires org.hibernate.validator;
     requires java.validation;
-
+    requires javafx.controls;
+    requires com.calendarfx.view;
 
     opens org to javafx.fxml,org.hibernate.orm.core;
     opens org.database.specialization to org.hibernate.orm.core, javafx.base;
@@ -28,7 +29,10 @@ module org {
     opens org.administrator.employee to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.patient to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.service to org.hibernate.orm.core, javafx.base,javafx.fxml;
-    exports org;
+    opens org.administrator.department to org.hibernate.orm.core, javafx.base,javafx.fxml;
+    opens org.administrator.specialization to org.hibernate.orm.core, javafx.base,javafx.fxml;
+    opens org.administrator.schedule to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics;
 
+    exports org;
 
 }

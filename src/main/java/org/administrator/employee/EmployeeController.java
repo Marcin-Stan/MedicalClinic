@@ -1,31 +1,31 @@
 package org.administrator.employee;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.database.employee.Employee;
+import org.InitializationTable;
 import org.database.employee.EmployeeEntity;
-import javafx.util.Callback;
 import org.database.operation.CRUD;
-import org.database.patient.PatientEntity;
+import org.table.Add;
+import org.table.Manage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmployeeController implements Initializable {
+
+    @FXML
+    TextField filterTextField;
 
     @FXML
     JFXButton addButton;
@@ -39,11 +39,18 @@ public class EmployeeController implements Initializable {
     CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
     List<EmployeeEntity> listEmployee = employeeEntityCRUD.getAll(EmployeeEntity.class);
 
+    Manage<EmployeeEntity> employeeEntityManage = new ManageEmployeeController();
+    InitializationTable<EmployeeEntity> initTable = new InitializationTable<>();
+
+    //observalble list to store data
+    private final ObservableList<EmployeeEntity> dataList = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         tableViewEmployee.getColumns().setAll(initTableView().getColumns());
-        fillTable(tableViewEmployee);
+        fillTableWithFilter();
+
     }
 
     private TableView<EmployeeEntity> initTableView(){
@@ -80,113 +87,58 @@ public class EmployeeController implements Initializable {
         column10.setCellValueFactory(new PropertyValueFactory<>("employeeType"));
 
         tableView.getColumns().addAll(column1,column2,column3,column4,column5,column6,column7,column8,column9,column10);
-        addButtonToTable(tableView);
+
+        initTable.addButtonToTableAndInitManageWindow(tableView,employeeEntityManage,"administrator/employee/ManageEmployee.fxml",stackPaneEmployee);
         return tableView;
 
     }
 
-    private void addButtonToTable(TableView<EmployeeEntity> tableView) {
-        TableColumn<EmployeeEntity, Void> colBtn = new TableColumn("");
-
-        Callback<TableColumn<EmployeeEntity, Void>, TableCell<EmployeeEntity, Void>> cellFactory = new Callback<>() {
-            @Override
-            public TableCell<EmployeeEntity, Void> call(final TableColumn<EmployeeEntity, Void> param) {
-                final TableCell<EmployeeEntity, Void> cell = new TableCell<>() {
-
-                    private final JFXButton btn = new JFXButton("Zarządzaj");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            EmployeeEntity employee = getTableView().getItems().get(getIndex());
-                            openAndInitNewWindow(employee);
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-
-        tableView.getColumns().add(colBtn);
-
-    }
-
-    private void fillTable(TableView<EmployeeEntity> tableView){
-
-        /*
-        for (int i = 0; i <listEmployee.size() ; i++) {
-            tableView.getItems().addAll(new EmployeeEntity(listEmployee.get(i).getId(),
-                    listEmployee.get(i).getFirstName(),
-                    listEmployee.get(i).getLastName(),
-                    listEmployee.get(i).getAddress(),
-                    listEmployee.get(i).getTelNumber(),
-                    listEmployee.get(i).getSex(),
-                    listEmployee.get(i).getBirtDate(),
-                    listEmployee.get(i).getCreationDate(),
-                    listEmployee.get(i).getLogin(),
-                    listEmployee.get(i).getPassword(),
-                    listEmployee.get(i).getEmployeeType(),
-                    listEmployee.get(i).getPhoto(),
-                    listEmployee.get(i).getSpecializationEntity()
-            ));
-        }
-
-         */
-        for (int i = 0; i <listEmployee.size() ; i++) {
-            tableView.getItems().addAll(listEmployee.get(i));
-        }
-
-    }
-
-    private void openAndInitNewWindow(EmployeeEntity employee){
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("ManageEmployee.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            ManageEmployeeController manageEmployeeController = fxmlLoader.getController();
-            manageEmployeeController.setParentStackPane(stackPaneEmployee);
-            manageEmployeeController.initData(employee);
-            Stage stage = new Stage();
-            stage.setTitle("Zarządzanie");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
     @FXML
     private void setAddButton(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("AddEmployee.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            AddEmployeeController addEmployeeController = fxmlLoader.getController();
-            addEmployeeController.setParentStackPane(stackPaneEmployee);
-            Stage stage = new Stage();
-            stage.setTitle("Dodawanie");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Add addEmployeeController = new AddEmployeeController();
+        initTable.setAddButton("administrator/employee/AddEmployee.fxml",addEmployeeController,stackPaneEmployee);
+    }
+
+
+    private void fillTableWithFilter(){
+        dataList.addAll(listEmployee);
+        FilteredList<EmployeeEntity> filteredData = new FilteredList<>(dataList, b -> true);
+
+        filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(employee -> {
+                // If filter text is empty, display all persons.
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (employee.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (employee.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                else if (String.valueOf(employee.getLogin()).contains(lowerCaseFilter))
+                    return true;
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<EmployeeEntity> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        // 	  Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty().bind(tableViewEmployee.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableViewEmployee.setItems(sortedData);
+
 
     }
+
 
 }

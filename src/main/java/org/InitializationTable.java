@@ -12,21 +12,21 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import org.administrator.employee.AddEmployeeController;
+import org.table.Add;
 import org.table.Manage;
 
+import java.io.IOException;
 import java.util.List;
 
 public class InitializationTable<T>{
 
     public void fillTable(TableView<T> tableView, List<T> entityList)  {
-
-        for(int i = 0; i<entityList.size(); i++){
-            tableView.getItems().addAll(entityList.get(i));
-        }
+            tableView.getItems().addAll(entityList);
 
     }
 
-    public void addButtonToTable(TableView<T> tableView, final Manage<T> manage, String nameWindow, StackPane stackPane) {
+    public void addButtonToTableAndInitManageWindow(TableView<T> tableView, final Manage<T> manage, String nameWindow, StackPane stackPane) {
         TableColumn<T, Void> colBtn = new TableColumn("");
 
         Callback<TableColumn<T, Void>, TableCell<T, Void>> cellFactory = new Callback<>() {
@@ -82,6 +82,27 @@ public class InitializationTable<T>{
         tableView.getColumns().add(colBtn);
 
     }
+
+    public void setAddButton(String pathtoWindow, Add addInteface, StackPane stackPane){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(pathtoWindow));
+            Scene scene = new Scene(fxmlLoader.load());
+            Add add = fxmlLoader.getController();
+            add.setParentStackPane(stackPane);
+            Stage stage = new Stage();
+            stage.setTitle("Dodawanie");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 
 

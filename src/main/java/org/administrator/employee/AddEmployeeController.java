@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.database.employee.Employee;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
 import org.database.specialization.Specialization;
@@ -17,13 +16,14 @@ import org.database.specialization.SpecializationEntity;
 import org.employee.EmployeeType;
 import org.employee.Sex;
 import org.image.ImageFx;
+import org.table.Add;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddEmployeeController implements Initializable {
+public class AddEmployeeController implements Initializable, Add {
 
     @FXML
     ComboBox<SpecializationEntity> specializationComboBox;
@@ -67,6 +67,7 @@ public class AddEmployeeController implements Initializable {
 
     StackPane parentStackPane;
     CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
+    CRUD<SpecializationEntity> specializationEntityCRUD = new CRUD<>();
 
     public void setParentStackPane(StackPane parentStackPane) {
         this.parentStackPane = parentStackPane;
@@ -74,7 +75,7 @@ public class AddEmployeeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        specializationComboBox.getItems().setAll(Specialization.getAllSpecialization());
+        specializationComboBox.getItems().setAll(specializationEntityCRUD.getAll(SpecializationEntity.class));
         specializationComboBox.getItems().add(null);
         sexComboBox.getItems().setAll(Sex.values());
         roleComboBox.getItems().setAll(EmployeeType.values());
@@ -104,7 +105,7 @@ public class AddEmployeeController implements Initializable {
         newEmploee.setBirtDate((birthDateDatePicker.getValue()));
 
 
-        if(employeeEntityCRUD.save(newEmploee,"użytkownika")){
+        if(employeeEntityCRUD.save(newEmploee)){
 
             try {
                 Stage stage = (Stage) saveButton.getScene().getWindow();

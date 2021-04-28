@@ -2,6 +2,7 @@ package org.database.patient;
 
 import org.database.visit.VisitEntity;
 import org.employee.Sex;
+import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -45,6 +46,7 @@ public class PatientEntity implements Serializable {
     private Sex sex;
 
     @NotNull(message = "Pole PESEL nie może być puste")
+    @PESEL(message = "Nieprawidłowy Numer Pesel")
     @Column(name="pesel_number")
     private String peselNumber;
 

@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TextField?>
 <StackPane fx:id="stackPaneSpecialization" prefHeight="551.0" prefWidth="1078.0" style="-fx-background-color: #F7F9FB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.administrator.specialization.SpecializationController">
    <children>
       <TableView fx:id="tableViewSpecialization" prefHeight="538.0" prefWidth="960.0">
@@ -27,5 +28,10 @@
             <Insets bottom="30.0" />
          </StackPane.margin>
       </JFXButton>
+      <TextField fx:id="filterTextField" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets left="800.0" right="20.0" top="10.0" />
+         </StackPane.margin>
+      </TextField>
    </children>
 </StackPane>

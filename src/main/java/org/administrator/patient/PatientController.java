@@ -1,12 +1,10 @@
 package org.administrator.patient;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,10 +12,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
+import org.administrator.employee.AddEmployeeController;
 import org.database.operation.CRUD;
 import org.database.patient.PatientEntity;
 import org.InitializationTable;
+import org.table.Add;
 import org.table.Manage;
 
 import java.io.IOException;
@@ -80,98 +79,15 @@ public class PatientController implements Initializable {
 
 
         tableView.getColumns().addAll(column1,column2,column3,column4,column5,column6,column7,column8);
-        initTable.addButtonToTable(tableView, patientEntityManage,"administrator/patient/ManagePatient.fxml",stackPanePatient);
-        //addButtonToTable(tableView);
+        initTable.addButtonToTableAndInitManageWindow(tableView, patientEntityManage,"administrator/patient/ManagePatient.fxml",stackPanePatient);
         return tableView;
 
     }
 
-    private void addButtonToTable(TableView<PatientEntity> tableView) {
-        TableColumn<PatientEntity, Void> colBtn = new TableColumn("");
-
-        Callback<TableColumn<PatientEntity, Void>, TableCell<PatientEntity, Void>> cellFactory = new Callback<>() {
-
-            @Override
-            public TableCell<PatientEntity, Void> call(final TableColumn<PatientEntity, Void> param) {
-                final TableCell<PatientEntity, Void> cell = new TableCell<>() {
-
-                    private final JFXButton btn = new JFXButton("Zarządzaj");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            PatientEntity patient = getTableView().getItems().get(getIndex());
-                            openAndInitNewWindow(patient);
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        colBtn.setCellFactory(cellFactory);
-
-        tableView.getColumns().add(colBtn);
-
-    }
-
-    private void fillTable(TableView<PatientEntity> tableView){
-
-        for (int i = 0; i <patientList.size() ; i++) {
-            tableView.getItems().addAll(patientList.get(i));
-        }
-
-
-    }
-
-    private void openAndInitNewWindow(PatientEntity patient){
-
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("ManagePatient.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            ManagePatientController managePatientController = fxmlLoader.getController();
-            managePatientController.initData(patient);
-            managePatientController.setParentStackPane(stackPanePatient);
-            Stage stage = new Stage();
-            stage.setTitle("Zarządzanie");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
     @FXML
     private void setAddButton(){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("AddPatient.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            AddPatientController addPatientController = fxmlLoader.getController();
-            addPatientController.setParentStackPane(stackPanePatient);
-            Stage stage = new Stage();
-            stage.setTitle("Dodawanie");
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Add addPatientController = new AddPatientController();
+        initTable.setAddButton("administrator/patient/AddPatient.fxml",addPatientController,stackPanePatient);
     }
+
 }

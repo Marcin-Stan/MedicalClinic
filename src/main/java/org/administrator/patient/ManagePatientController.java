@@ -102,40 +102,14 @@ public class ManagePatientController implements Initializable, Manage<PatientEnt
     }
 
     @FXML
-    public void setCloseButton(){
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-
-        try {
-            StackPane test = FXMLLoader.load(getClass().getResource("Patient.fxml"));
-            parentStackPane.getChildren().add(test);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setCloseButton() {
+        setCloseButton(closeButton,"Patient.fxml",parentStackPane);
     }
+
 
     @FXML
     private void setDeleteButton(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Informacja");
-        alert.setHeaderText("Czy na pewno chcesz usunąć pacjenta?");
-        alert.setContentText("Zmiany będą nieodwracalne");
-        alert.showAndWait();
-        if(alert.getResult() == ButtonType.OK){
-            if(patientEntityCRUD.delete(patient,"pacjent")){
-
-                Stage stage = (Stage) closeButton.getScene().getWindow();
-                stage.close();
-
-                try {
-                    StackPane test = FXMLLoader.load(getClass().getResource("Patient.fxml"));
-                    parentStackPane.getChildren().add(test);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
+      setDeleteButton(patientEntityCRUD,patient,closeButton,parentStackPane,"Patient.fxml");
     }
 
 
@@ -155,10 +129,8 @@ public class ManagePatientController implements Initializable, Manage<PatientEnt
         updatedPatient.setCreationDate((creationDateDatePicker.getValue()));
         updatedPatient.setBirtDate((birthDateDatePicker.getValue()));
 
-        patientEntityCRUD.update(updatedPatient,"pacjenta");
+        patientEntityCRUD.update(updatedPatient);
 
     }
-
-
 
 }

@@ -4,8 +4,7 @@ import org.database.department.DepartmentEntity;
 import org.database.visit.VisitEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 

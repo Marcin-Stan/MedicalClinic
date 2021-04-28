@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
 import org.database.specialization.Specialization;
+import org.database.specialization.SpecializationEntity;
 import org.employee.EmployeeType;
 import org.employee.Sex;
 import org.image.ImageFx;
@@ -66,22 +67,14 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
     ImageFx imageFx = new ImageFx();
 
     CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
-
+    CRUD<SpecializationEntity> specializationEntityCRUD = new CRUD<>();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
     @FXML
     public void setCloseButton(){
-            Stage stage = (Stage) closeButton.getScene().getWindow();
-            stage.close();
-
-            try {
-                StackPane test = FXMLLoader.load(getClass().getResource("Employee.fxml"));
-                parentStackPane.getChildren().add(test);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        setCloseButton(closeButton,"Employee.fxml",parentStackPane);
     }
 
     public void setParentStackPane(StackPane parentStackPane) {
@@ -107,33 +100,13 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
 
         sexComboBox.setValue(employee.getSex());
 
-
         if(employee.getPhoto()!=null)
             itemImage.setImage(ImageFx.convertToJavaFXImage(employee.getPhoto(),300,300));
     }
 
     @FXML
     private void setDeleteButton(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Informacja");
-        alert.setHeaderText("Czy na pewno chcesz usunąć użytkownika?");
-        alert.setContentText("Zmiany będą nieodwracalne");
-        alert.showAndWait();
-        if(alert.getResult() == ButtonType.OK){
-            if(employeeEntityCRUD.delete(employee,"użytkownik")){
-
-                Stage stage = (Stage) closeButton.getScene().getWindow();
-                stage.close();
-
-                try {
-                    StackPane test = FXMLLoader.load(getClass().getResource("Employee.fxml"));
-                    parentStackPane.getChildren().add(test);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
+        setDeleteButton(employeeEntityCRUD,employee,closeButton,parentStackPane,"Employee.fxml");
     }
 
     @FXML
@@ -165,7 +138,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         roleComboBox.getItems().setAll(EmployeeType.values());
 
         specializationComboBox.setDisable(false);
-        specializationComboBox.getItems().setAll(Specialization.getAllSpecialization());
+        specializationComboBox.getItems().setAll(specializationEntityCRUD.getAll(SpecializationEntity.class));
         specializationComboBox.getItems().add(null);
 
         sexComboBox.setDisable(false);
@@ -215,7 +188,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         updatedEmployee.setCreationDate((creationDateDatePicker.getValue()));
         updatedEmployee.setBirtDate((birthDateDatePicker.getValue()));
 
-        employeeEntityCRUD.update(updatedEmployee,"użytkownika");
+        employeeEntityCRUD.update(updatedEmployee);
 
     }
 

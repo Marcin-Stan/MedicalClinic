@@ -31,7 +31,7 @@ public class CRUD<T> {
         return null;
     }
 
-    public void update(T entity,String updatedEntity){
+    public void update(T entity){
         Session session = new Configuration().configure().buildSessionFactory().openSession();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
         String errorMessage="";
@@ -45,7 +45,7 @@ public class CRUD<T> {
             session.getTransaction().commit();
             AlertValidator.printALert("Informacja","Sukces","Pomyślnie zaktualizowano dane", Alert.AlertType.INFORMATION);
         }catch (ConstraintViolationException e){
-            AlertValidator.printALert("Błąd","Nie można zaktualizować danych "+updatedEntity,errorMessage, Alert.AlertType.ERROR);
+            AlertValidator.printALert("Błąd","Nie można zaktualizować danych",errorMessage, Alert.AlertType.ERROR);
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -54,18 +54,18 @@ public class CRUD<T> {
 
     }
 
-    public boolean delete(T entity, String deltedEntity){
+    public boolean delete(T entity){
         Session session = new Configuration().configure().buildSessionFactory().openSession();
         try {
             session.beginTransaction();
             session.delete(entity);
             session.getTransaction().commit();
-            AlertValidator.printALert("Informacja","Sukces","Pomyślnie usunięto "+ deltedEntity +"a", Alert.AlertType.INFORMATION);
+            AlertValidator.printALert("Informacja","Sukces","Pomyślnie usunięto obiekt ", Alert.AlertType.INFORMATION);
             return true;
         } catch (PersistenceException e) {
             AlertValidator.printALert("Błąd",
-                    "Podany "+ deltedEntity + "nie może zostać usunięty",
-                    "Sprawdź, czy "+ deltedEntity + "nie jest przypisany do innych tabel",
+                    "Podany obiekt nie może zostać usunięty",
+                    "Sprawdź, czy nie jest przypisany do innych tabel",
                     Alert.AlertType.ERROR);
             e.printStackTrace();
         }finally {
@@ -74,7 +74,7 @@ public class CRUD<T> {
         return false;
     }
 
-    public boolean save(T entity, String savedEntity){
+    public boolean save(T entity){
         Session session = new Configuration().configure().buildSessionFactory().openSession();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
         String errorMessage="";
@@ -85,10 +85,10 @@ public class CRUD<T> {
             session.beginTransaction();
             session.save(entity);
             session.getTransaction().commit();
-            AlertValidator.printALert("Informacja","Sukces","Utworzono pacjenta", Alert.AlertType.INFORMATION);
+            AlertValidator.printALert("Informacja","Sukces","Utworzono nowy obiekt!", Alert.AlertType.INFORMATION);
             return true;
         }catch (ConstraintViolationException e){
-            AlertValidator.printALert("Błąd","Nie można utworzyć pacjenta",errorMessage, Alert.AlertType.ERROR);
+            AlertValidator.printALert("Błąd","Nie można utworzyć obiektu",errorMessage, Alert.AlertType.ERROR);
         }catch (Exception e){
             e.printStackTrace();
         }

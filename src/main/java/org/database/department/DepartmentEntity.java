@@ -4,6 +4,8 @@ import org.database.schedule.ScheduleEntity;
 import org.database.service.ServiceEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class DepartmentEntity implements Serializable {
     @GeneratedValue
     private int id;
 
+    @Size(min = 2, max = 40, message
+            = "Pole nazwa nie może być puste i musi zawierać co najmniej dwa znaki")
     @Column(name = "name")
     private String name;
 
@@ -46,5 +50,10 @@ public class DepartmentEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -1,34 +1,25 @@
 package org.administrator.schedule;
-import com.calendarfx.model.Calendar;
+import com.calendarfx.model.*;
 import com.calendarfx.model.Calendar.Style;
-import com.calendarfx.model.CalendarSource;
-import com.calendarfx.model.Entry;
-import com.calendarfx.model.Interval;
-import com.calendarfx.view.ButtonBar;
-import com.calendarfx.view.CalendarView;
-import com.calendarfx.view.DayEntryView;
-import com.calendarfx.view.DetailedDayView;
+import com.calendarfx.view.*;
 import com.calendarfx.view.popover.EntryDetailsView;
-import com.calendarfx.view.popover.EntryPopOverContentPane;
-import com.calendarfx.view.popover.EntryPropertiesView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.database.department.DepartmentEntity;
+import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
 import org.database.schedule.ScheduleEntity;
-
-import java.awt.event.InputMethodEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 //EntryDetailsVIew trzeba zmienić
 public class Schedule extends Application {
 
@@ -38,31 +29,31 @@ public class Schedule extends Application {
     CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
     List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
 
+    CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
+    List<EmployeeEntity> entityList = employeeEntityCRUD.getAll(EmployeeEntity.class);
 
     List<Calendar> calendarList = new ArrayList<>();
-    List<Entry> entryList = new ArrayList<>();
+    List<ScheduleEntry> entryList = new ArrayList<>();
 
 
     @Override
     public void start(Stage primaryStage) {
+
         CalendarView calendarView = new CalendarView();
-
-        for(int i = 0; i<scheduleList.size();i++){
-            entryList.add(new Entry(scheduleList.get(i).getEmployee().getFirstName()+"\n"+scheduleList.get(i).getEmployee().getFirstName()));
-            Interval interval = new Interval(scheduleList.get(i).getDate(),scheduleList.get(i).getTimeFrom(),scheduleList.get(i).getDate(),scheduleList.get(i).getTimeTo());
-            entryList.get(i).setInterval(interval);
-
-        }
 
         for(int i=0;i<departmentList.size();i++){
            calendarList.add(new Calendar(departmentList.get(i).getName()));
            calendarList.get(i).setShortName(departmentList.get(i).getName().substring(8,12));
            calendarList.get(i).setStyle(Style.valueOf("STYLE"+String.valueOf(1+i)));
-           calendarList.get(i).addEntry(entryList.get(0));
         }
 
-        ScheduleEntryDetailsView detailsView = new ScheduleEntryDetailsView(entryList.get(0));
-
+        for(int i = 0; i<scheduleList.size();i++){
+            entryList.add(new ScheduleEntry());
+            Interval interval = new Interval(scheduleList.get(i).getDate(),scheduleList.get(i).getTimeFrom(),scheduleList.get(i).getDate(),scheduleList.get(i).getTimeTo());
+            entryList.get(i).setInterval(interval);
+            entryList.get(i).setEmployeeEntity(entityList.get(i));
+            calendarList.get(i).addEntry(entryList.get(i));
+        }
 
         CalendarSource familyCalendarSource = new CalendarSource("Gabinety");
         familyCalendarSource.getCalendars().addAll(calendarList);
@@ -70,23 +61,54 @@ public class Schedule extends Application {
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.setShowAddCalendarButton(false);
         calendarView.setShowDeveloperConsole(true);
-        System.out.println(    calendarView.showDeveloperConsoleProperty().get());
+        //System.out.println(    calendarView.showDeveloperConsoleProperty().get());
 
-        /*
-        calendarView.getDayPage().getDetailedDayView().getDayView().setEntryViewFactory(entry -> {
-            DayEntryView entryView = new DayEntryView(entry);
+        calendarView.setEntryFactory(param-> new ScheduleEntry());
+
+        calendarView.getDayPage().getDetailedDayView().getDayView().setEntryViewFactory(entryy -> {
+            DayEntryView entryView = new DayEntryView(entryy);
+
             entryView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     EntryDetailsView entryDetailsView = new EntryDetailsView(entryView.getEntry());
-                    System.out.println("test");
+                    EntryViewBase base = (EntryViewBase) mouseEvent.getSource();
+                    ScheduleEntry scheduleEntry = (ScheduleEntry) base.getEntry();
+                    calendarView.setEntryDetailsPopOverContentCallback(entryDetailsPopOverContentParameter -> new ScheduleEntryPopOverContentPane(scheduleEntry,calendarList));
+
+                }
+            });
+
+            entryView.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    EntryDetailsView entryDetailsView = new EntryDetailsView(entryView.getEntry());
+                    EntryViewBase base = (EntryViewBase) mouseEvent.getSource();
+                    System.out.println(base.getEntry().getEndTime());
                 }
             });
             return entryView;
         } );
 
+        /*
+        calendarView.getWeekPage().getDetailedWeekView().getAllDayView().setEntryViewFactory(e -> {
+            AllDayEntryView entryView = new AllDayEntryView(e);
+            calendarView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("test");
+                    AllDayEntryView entryDetailsView = new AllDayEntryView(entryView.getEntry());
+                    EntryViewBase base = (EntryViewBase) mouseEvent.getSource();
+                    calendarView.setEntryDetailsPopOverContentCallback(entryDetailsPopOverContentParameter -> new ScheduleEntryPopOverContentPane(base.getEntry(),calendarList));
+
+                }
+            });
+            return entryView;
+
+        });
+
          */
-       calendarView.setEntryDetailsPopOverContentCallback(entryDetailsPopOverContentParameter -> new ScheduleEntryPopOverContentPane(entryList.get(0),calendarList));
+
 
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(calendarView); // introPane);
@@ -130,5 +152,3 @@ public class Schedule extends Application {
     }
 
 }
-
-

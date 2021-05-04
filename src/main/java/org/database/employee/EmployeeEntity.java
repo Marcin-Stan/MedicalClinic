@@ -227,4 +227,10 @@ public class EmployeeEntity implements Serializable {
     public void setSpecializationEntity(SpecializationEntity specializationEntity) {
         this.specialization = specializationEntity;
     }
+
+    @Override
+    public String toString() {
+        return firstName +" "+lastName;
+
+    }
 }

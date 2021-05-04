@@ -14,6 +14,7 @@ module org {
     requires java.validation;
     requires javafx.controls;
     requires com.calendarfx.view;
+    requires org.joda.time;
 
     opens org to javafx.fxml,org.hibernate.orm.core;
     opens org.database.specialization to org.hibernate.orm.core, javafx.base;
@@ -31,7 +32,8 @@ module org {
     opens org.administrator.service to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.department to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.specialization to org.hibernate.orm.core, javafx.base,javafx.fxml;
-    opens org.administrator.schedule to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics;
+    opens org.administrator.schedule to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics,org.controlsfx.controls;
+
 
     exports org;
 

@@ -1,43 +1,56 @@
 package org.administrator.schedule;
 import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.database.employee.EmployeeEntity;
+import org.database.operation.CRUD;
+import org.database.schedule.ScheduleEntity;
 import org.joda.time.DateTime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
-public class ScheduleEntry extends Entry<EmployeeEntity>{
+public class ScheduleEntry extends Entry<ScheduleEntity>{
 
+    SimpleObjectProperty<ScheduleEntity> scheduleEntity;
     EmployeeEntity employeeEntity;
 
     public ScheduleEntry(){
         super();
-        DateTime startTime = getDateTime(this.getStartDate(), this.getStartTime());
-        DateTime endTime = getDateTime(this.getEndDate(), this.getEndTime());
+
+        this.scheduleEntity = new SimpleObjectProperty<ScheduleEntity>(this,"scheduleEntity"){
+            @Override
+            public void set(ScheduleEntity scheduleEntity) {
+                super.set(scheduleEntity);
+            }
+        };
+    }
+
+    public void setScheduleEntity(ScheduleEntity scheduleEntity) {
+        this.scheduleEntity.set(scheduleEntity);
+    }
+
+    /*
+    public void setEmployeeEntity(EmployeeEntity employeeEntity){
+        this.scheduleEntity.get().setEmployee(employeeEntity);
 
     }
 
-    public void setEmployeeEntity(EmployeeEntity employeeEntity) {
-        this.employeeEntity = employeeEntity;
-    }
+     */
 
-    public EmployeeEntity getEmployeeEntity() {
-        return employeeEntity;
+    public ScheduleEntity getScheduleEntity() {
+        return this.scheduleEntity.get();
     }
 
     @Override
     public ScheduleEntry createRecurrence() {
-        ScheduleEntry scheduleEntry = new ScheduleEntry();
-        scheduleEntry.setEmployeeEntity(getEmployeeEntity());
-        System.out.println("HEHEHHEHE");
-        return scheduleEntry;
+        return new ScheduleEntry();
     }
 
-    private DateTime getDateTime(LocalDate date, LocalTime time) {
-        return new DateTime(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), time.getHour(),
-                time.getMinute());
-    }
+
+
 
 }

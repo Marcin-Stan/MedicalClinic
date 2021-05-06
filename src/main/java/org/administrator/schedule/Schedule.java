@@ -3,11 +3,18 @@ import com.calendarfx.model.*;
 import com.calendarfx.model.Calendar.Style;
 import com.calendarfx.view.*;
 import com.calendarfx.view.popover.EntryDetailsView;
+import impl.com.calendarfx.view.AllDayEntryViewSkin;
+import impl.com.calendarfx.view.CalendarViewSkin;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.database.department.DepartmentEntity;
@@ -39,7 +46,23 @@ public class Schedule extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        CalendarView calendarView = new CalendarView();
+        /*
+        CalendarView calendarView = ScheduleCalendarAppViewSkin.test();
+
+        final ScheduleEntity[] scheduleEntity = new ScheduleEntity[1];
+
+        EventHandler<CalendarEvent> handler = new EventHandler<CalendarEvent>() {
+            @Override
+            public void handle(CalendarEvent calendarEvent) {
+                System.out.println("Jestem w evencie");
+                scheduleEntity[0] = new ScheduleEntity(calendarEvent.getEntry().getStartDate(),
+                        calendarEvent.getEntry().getStartTime(),
+                        calendarEvent.getEntry().getEndTime(),
+                        entityList.get(0),
+                        departmentList.get(0));
+                System.out.println(scheduleEntity[0].getId());
+            }
+        };
 
         for(int i=0;i<departmentList.size();i++){
            calendarList.add(new Calendar(departmentList.get(i).getName()));
@@ -48,10 +71,11 @@ public class Schedule extends Application {
         }
 
         for(int i = 0; i<scheduleList.size();i++){
-            entryList.add(new ScheduleEntry());
+
             Interval interval = new Interval(scheduleList.get(i).getDate(),scheduleList.get(i).getTimeFrom(),scheduleList.get(i).getDate(),scheduleList.get(i).getTimeTo());
+            entryList.add(new ScheduleEntry());
             entryList.get(i).setInterval(interval);
-            entryList.get(i).setEmployeeEntity(entityList.get(i));
+            //entryList.get(i).setEmployeeEntity(entityList.get(i));
             calendarList.get(i).addEntry(entryList.get(i));
         }
 
@@ -63,8 +87,16 @@ public class Schedule extends Application {
         calendarView.setShowDeveloperConsole(true);
         //System.out.println(    calendarView.showDeveloperConsoleProperty().get());
 
-        calendarView.setEntryFactory(param-> new ScheduleEntry());
+        //calendarList.get(0).addEventHandler(handler);
 
+
+        //Interval interval = new Interval();
+        //calendarView.setEntryFactory(param-> new ScheduleEntry());
+
+        //ScheduleEntry scheduleEntry = new ScheduleEntry();
+        //calendarView.setEntryDetailsPopOverContentCallback(entryDetailsPopOverContentParameter -> new ScheduleEntryPopOverContentPane(scheduleEntry,calendarList));
+
+        /*
         calendarView.getDayPage().getDetailedDayView().getDayView().setEntryViewFactory(entryy -> {
             DayEntryView entryView = new DayEntryView(entryy);
 
@@ -72,9 +104,9 @@ public class Schedule extends Application {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     EntryDetailsView entryDetailsView = new EntryDetailsView(entryView.getEntry());
-                    EntryViewBase base = (EntryViewBase) mouseEvent.getSource();
-                    ScheduleEntry scheduleEntry = (ScheduleEntry) base.getEntry();
-                    calendarView.setEntryDetailsPopOverContentCallback(entryDetailsPopOverContentParameter -> new ScheduleEntryPopOverContentPane(scheduleEntry,calendarList));
+                    //EntryViewBase base = (EntryViewBase) mouseEvent.getSource();
+                    //ScheduleEntry scheduleEntry = (ScheduleEntry) base.getEntry();
+                    //scheduleEntry.setScheduleEntity(scheduleEntity[0]);
 
                 }
             });
@@ -89,6 +121,10 @@ public class Schedule extends Application {
             });
             return entryView;
         } );
+
+         */
+
+
 
         /*
         calendarView.getWeekPage().getDetailedWeekView().getAllDayView().setEntryViewFactory(e -> {
@@ -109,7 +145,8 @@ public class Schedule extends Application {
 
          */
 
-
+        /*
+        calendarView.setShowDeveloperConsole(true);
         StackPane stackPane = new StackPane();
         stackPane.getChildren().addAll(calendarView); // introPane);
 
@@ -144,11 +181,37 @@ public class Schedule extends Application {
         primaryStage.setHeight(1000);
         primaryStage.centerOnScreen();
         primaryStage.show();
+
+
+
+
+        /*
+
+
+         */
+
+        CalendarView calendarView = new CalendarView();
+        calendarView.setToday(LocalDate.now());
+        calendarView.setTime(LocalTime.now());
+        calendarView.setShowDeveloperConsole(Boolean.getBoolean("calendarfx.developer"));
+
+        ScheduleCalendarAppView appView = new ScheduleCalendarAppView(calendarView);
+        appView.getStylesheets().add(CalendarView.class.getResource("calendar.css").toExternalForm());
+
+        primaryStage.setTitle("Google Calendar");
+        primaryStage.setScene(new Scene(appView));
+        primaryStage.setWidth(1400);
+        primaryStage.setHeight(950);
+        primaryStage.centerOnScreen();
+        primaryStage.show();
     }
+
 
     public static void main(String[] args) {
         System.setProperty("calendarfx.developer", "true");
         launch(args);
     }
+
+
 
 }

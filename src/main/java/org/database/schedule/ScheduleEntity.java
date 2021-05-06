@@ -35,8 +35,7 @@ public class ScheduleEntity implements Serializable {
     private DepartmentEntity department;
 
     public ScheduleEntity(){}
-    public ScheduleEntity(int id, LocalDate date, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
-        this.id = id;
+    public ScheduleEntity(LocalDate date, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
         this.date = date;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;

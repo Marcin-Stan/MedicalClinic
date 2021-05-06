@@ -22,9 +22,8 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
     public ScheduleEntryDetailsView(ScheduleEntry entry) {
         super(entry);
         //this.entry=entry;
-
         employeeEntityComboBox.getItems().setAll(employeeEntityCRUD.getAll(EmployeeEntity.class));
-        employeeEntityComboBox.setValue(entry.getEmployeeEntity());
+        //employeeEntityComboBox.setValue(entry.getScheduleEntity().getEmployee());
         GridPane box = (GridPane) getChildren().get(0);
         Label employee = new Label("Employee");
         box.add(employeeEntityComboBox, 1, 5);

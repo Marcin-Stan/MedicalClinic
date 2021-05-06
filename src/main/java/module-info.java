@@ -15,6 +15,8 @@ module org {
     requires javafx.controls;
     requires com.calendarfx.view;
     requires org.joda.time;
+    requires com.google.common;
+    requires org.kordamp.ikonli.core;
 
     opens org to javafx.fxml,org.hibernate.orm.core;
     opens org.database.specialization to org.hibernate.orm.core, javafx.base;

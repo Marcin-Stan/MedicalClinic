@@ -19,12 +19,7 @@ public class ScheduleAccount extends CalendarSource {
         this.id = id;
     }
 
-    public final ScheduleCalendar createCalendar(String name, Calendar.Style style) {
-        ScheduleCalendar calendar = new ScheduleCalendar();
-        calendar.setName(name);
-        calendar.setStyle(style);
-        return calendar;
-    }
+
 
     public ScheduleCalendar getPrimaryCalendar() {
         return (ScheduleCalendar) getCalendars().stream()

@@ -1,5 +1,7 @@
 package org.administrator.schedule;
 
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
 import com.calendarfx.view.AllDayView;
 import com.calendarfx.view.CalendarView;
@@ -12,22 +14,44 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
+import org.database.department.DepartmentEntity;
+import org.database.operation.CRUD;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppView> {
 
+    CRUD<DepartmentEntity> departmentEntityCRUD = new CRUD<>();
+    List<DepartmentEntity> departmentList = departmentEntityCRUD.getAll(DepartmentEntity.class);
+    List<ScheduleCalendar> calendarList = new ArrayList<>();
+
     private final BorderPane calendarPane;
     private final CalendarView calendarView;
-    private final ScheduleSynManager syncManager;
+    //private final ScheduleSynManager syncManager;
 
     public ScheduleCalendarAppViewSkin(ScheduleCalendarAppView control) {
         super(control);
 
         calendarView = control.getCalendarView();
-        syncManager = new ScheduleSynManager();
+        //syncManager = new ScheduleSynManager();
+
+        for(int i=0;i<departmentList.size();i++){
+            calendarList.add(new ScheduleCalendar());
+            calendarList.get(i).setName(departmentList.get(i).getName());
+            calendarList.get(i).setShortName(departmentList.get(i).getName().substring(8,12));
+            calendarList.get(i).setStyle(Calendar.Style.valueOf("STYLE"+String.valueOf(1+i)));
+        }
+
+        CalendarSource familyCalendarSource = new CalendarSource("Gabinety");
+        familyCalendarSource.getCalendars().addAll(calendarList);
+        calendarView.getCalendarSources().setAll(familyCalendarSource);
+
+
 
         calendarView.setEntryFactory(new ScheduleEntryCreateCallback());
         calendarView.setEntryDetailsPopOverContentCallback(new ScheduleEntryPopOverContentProvider());
@@ -36,24 +60,16 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
         calendarPane = new BorderPane();
         calendarPane.setCenter(calendarView);
 
-        ScheduleAccount scheduleAccount = new ScheduleAccount();
+        //ScheduleAccount scheduleAccount = new ScheduleAccount();
 
-        scheduleAccount.addCalendarListeners(syncManager);
-        ScheduleTaskExecutor.getInstance().execute(new LoadAllCalendarsTask(scheduleAccount));
+        //scheduleAccount.addCalendarListeners(syncManager);
+        //ScheduleTaskExecutor.getInstance().execute(new LoadAllCalendarsTask(scheduleAccount));
 
         getChildren().add(new StackPane(calendarPane));
 
         timeUpdateThread.start();
 
     }
-
-    public static CalendarView test() {
-        CalendarView calendarView = new CalendarView();
-        calendarView.setEntryFactory(new ScheduleEntryCreateCallback());
-        calendarView.setEntryDetailsPopOverContentCallback(new ScheduleEntryPopOverContentProvider());
-        return calendarView;
-    }
-
 
     private static class ScheduleEntryCreateCallback implements Callback<DateControl.CreateEntryParameter, Entry<?>> {
 

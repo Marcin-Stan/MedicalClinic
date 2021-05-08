@@ -45,7 +45,7 @@ public class ScheduleSynManager implements EventHandler<CalendarEvent>, ListChan
     private void insertEntry(CalendarEvent evt) {
         ScheduleEntry entry = (ScheduleEntry) evt.getEntry();
         ScheduleCalendar calendar = (ScheduleCalendar) evt.getCalendar();
-        ScheduleTaskExecutor.getInstance().execute(new InsertEntryTask(entry, calendar));
+        //ScheduleTaskExecutor.getInstance().execute(new InsertEntryTask(entry, calendar));
     }
 
     private boolean requiresInsertEntry(CalendarEvent evt) {

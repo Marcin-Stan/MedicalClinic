@@ -2,15 +2,22 @@ package org.administrator.schedule;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Interval;
+import org.database.employee.EmployeeEntity;
+import org.database.operation.CRUD;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 public class ScheduleCalendar extends Calendar {
 
     private static int entryConsecutive = 1;
 
+    CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
+    List<EmployeeEntity> entityList = employeeEntityCRUD.getAll(EmployeeEntity.class);
+
     public ScheduleCalendar() {
         super();
+        this.getName();
     }
 
     private static int generateEntryConsecutive() {
@@ -18,8 +25,8 @@ public class ScheduleCalendar extends Calendar {
     }
 
     public final ScheduleEntry createEntry(ZonedDateTime start, boolean fullDay){
-        ScheduleEntry entry = new ScheduleEntry();
-        entry.setTitle("New Entry " + generateEntryConsecutive());
+        ScheduleEntry entry = new ScheduleEntry(null);
+        entry.setTitle("New Entry" + generateEntryConsecutive());
         entry.setInterval(new Interval(start.toLocalDate(), start.toLocalTime(), start.toLocalDate(), start.toLocalTime().plusHours(1)));
         entry.setFullDay(fullDay);
         return entry;

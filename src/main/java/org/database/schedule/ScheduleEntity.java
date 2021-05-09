@@ -14,11 +14,13 @@ public class ScheduleEntity implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     private int id;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "date_start")
+    private LocalDate startDate;
+
+    @Column(name = "date_end")
+    private LocalDate endDate;
 
     @Column(name = "time_from")
     private LocalTime timeFrom;
@@ -35,8 +37,10 @@ public class ScheduleEntity implements Serializable {
     private DepartmentEntity department;
 
     public ScheduleEntity(){}
-    public ScheduleEntity(LocalDate date, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
-        this.date = date;
+    public ScheduleEntity(int id,LocalDate startDate,LocalDate endDate, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
         this.employee = employee;
@@ -51,12 +55,20 @@ public class ScheduleEntity implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public LocalTime getTimeFrom() {

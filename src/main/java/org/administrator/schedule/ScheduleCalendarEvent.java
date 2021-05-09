@@ -2,6 +2,7 @@ package org.administrator.schedule;
 
 import com.calendarfx.model.CalendarEvent;
 import javafx.event.EventType;
+import org.database.employee.EmployeeEntity;
 
 public class ScheduleCalendarEvent extends CalendarEvent {
 
@@ -17,7 +18,7 @@ public class ScheduleCalendarEvent extends CalendarEvent {
     public static final EventType<ScheduleCalendarEvent> ENTRY_REMINDERS_CHANGED = new EventType<>(
             ENTRY_CHANGED, "ENTRY_REMINDERS_CHANGED");
 
-    ScheduleCalendarEvent(EventType<ScheduleCalendarEvent> eventType, ScheduleCalendar calendar, ScheduleEntry entry) {
+    ScheduleCalendarEvent(EventType<ScheduleCalendarEvent> eventType, ScheduleCalendar calendar, ScheduleEntry entry, Object oldobject) {
         super(eventType, calendar, entry);
     }
 

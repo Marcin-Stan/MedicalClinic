@@ -129,7 +129,7 @@ public class ManagePatientController implements Initializable, Manage<PatientEnt
         updatedPatient.setCreationDate((creationDateDatePicker.getValue()));
         updatedPatient.setBirtDate((birthDateDatePicker.getValue()));
 
-        patientEntityCRUD.update(updatedPatient);
+        patientEntityCRUD.update(updatedPatient,true);
 
     }
 

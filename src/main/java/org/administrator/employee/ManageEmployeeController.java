@@ -188,7 +188,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         updatedEmployee.setCreationDate((creationDateDatePicker.getValue()));
         updatedEmployee.setBirtDate((birthDateDatePicker.getValue()));
 
-        employeeEntityCRUD.update(updatedEmployee);
+        employeeEntityCRUD.update(updatedEmployee,true);
 
     }
 

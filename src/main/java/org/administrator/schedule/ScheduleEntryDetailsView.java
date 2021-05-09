@@ -30,11 +30,12 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
         employeeEntityComboBox.setValue(entry.getEmployee());
         employeeEntityComboBox.valueProperty().bindBidirectional(entry.getEmployeeProperty());
 
-
         GridPane box = (GridPane) getChildren().get(0);
         Label employee = new Label("Employee");
-        box.add(employeeEntityComboBox, 1, 5);
-        box.add(employee,0,5);
+        box.getChildren().remove(6);
+        box.getChildren().remove(6);
+        box.add(employeeEntityComboBox, 1, 3);
+        box.add(employee,0,3);
         GridPane.setValignment(employeeEntityComboBox, VPos.TOP);
 
         box.getChildren().get(0);

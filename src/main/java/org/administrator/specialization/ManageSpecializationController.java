@@ -74,7 +74,7 @@ public class ManageSpecializationController implements Initializable, Manage<Spe
         updatedSpecialization.setId(specialization.getId());
         updatedSpecialization.setSpecName(nameTextField.getText());
 
-        specializationEntityCRUD.update(updatedSpecialization);
+        specializationEntityCRUD.update(updatedSpecialization,true);
     }
 
 }

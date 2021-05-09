@@ -31,7 +31,7 @@ public class CRUD<T> {
         return null;
     }
 
-    public void update(T entity){
+    public void update(T entity, boolean showInfo){
         Session session = new Configuration().configure().buildSessionFactory().openSession();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
         String errorMessage="";
@@ -43,7 +43,9 @@ public class CRUD<T> {
             session.beginTransaction();
             session.update(entity);
             session.getTransaction().commit();
-            AlertValidator.printALert("Informacja","Sukces","Pomyślnie zaktualizowano dane", Alert.AlertType.INFORMATION);
+            if(showInfo) {
+                AlertValidator.printALert("Informacja", "Sukces", "Pomyślnie zaktualizowano dane", Alert.AlertType.INFORMATION);
+            }
         }catch (ConstraintViolationException e){
             AlertValidator.printALert("Błąd","Nie można zaktualizować danych",errorMessage, Alert.AlertType.ERROR);
         }catch (Exception e){

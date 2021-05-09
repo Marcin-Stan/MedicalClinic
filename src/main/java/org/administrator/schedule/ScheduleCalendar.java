@@ -4,6 +4,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Interval;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
+import org.database.schedule.ScheduleEntity;
 
 import java.time.ZonedDateTime;
 import java.util.List;

@@ -20,35 +20,26 @@ import java.util.List;
 
 public class ScheduleEntry extends Entry<ScheduleEntity>{
 
-    private final SimpleObjectProperty<ScheduleEntity> scheduleEntity;
+    private ScheduleEntity scheduleEntity;
     private final SimpleObjectProperty<EmployeeEntity> employee;
 
-    CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
-    List<EmployeeEntity> entityList = employeeEntityCRUD.getAll(EmployeeEntity.class);
+    //CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
+    //List<EmployeeEntity> entityList = employeeEntityCRUD.getAll(EmployeeEntity.class);
 
-    CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
-    List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
+    //CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
+    //List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
     public ScheduleEntry(EmployeeEntity employeeEntity){
         super();
-        this.scheduleEntity = new SimpleObjectProperty<>(this,"scheduleEntity"){
-            @Override
-            public void set(ScheduleEntity scheduleEntity) {
-                super.set(scheduleList.get(0));
-            }
-        };
 
-        System.out.println(getCalendar());
-
-        //this.employee = new SimpleObjectProperty<>(this,"employee");
         this.employee = new SimpleObjectProperty<>(this,"employee"){
             @Override
             public void set(EmployeeEntity employeeEntity) {
-                EmployeeEntity employeeEntity1 = this.get();
+                //EmployeeEntity employeeEntity1 = this.get();
                 ScheduleCalendar scheduleCalendar = (ScheduleCalendar) ScheduleEntry.this.getCalendar();
                 if(employeeEntity!=null ){
-                    System.out.println("jazda");
                     super.set(employeeEntity);
-                    scheduleCalendar.fireEvent(new CalendarEvent(CalendarEvent.ENTRY_USER_OBJECT_CHANGED, scheduleCalendar,ScheduleEntry.this,employeeEntity1));
+                    scheduleCalendar.fireEvent(new CalendarEvent(CalendarEvent.ENTRY_USER_OBJECT_CHANGED, scheduleCalendar,ScheduleEntry.this,employeeEntity));
+                    //scheduleCalendar.fireEvent(new ScheduleCalendarEvent(ScheduleCalendarEvent.ENTRY_ATTENDEES_CHANGED,scheduleCalendar,ScheduleEntry.this,employeeEntity1));
                 }
 
             }
@@ -68,13 +59,15 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
          */
         this.setEmployee(employeeEntity);
 
-        
+
     }
-    ObservableList<ComboBox<EmployeeEntity>> comboBoxes = FXCollections.observableArrayList();
     public void setScheduleEntity(ScheduleEntity scheduleEntity) {
-        this.scheduleEntity.set(scheduleEntity);
+        this.scheduleEntity = scheduleEntity;
     }
 
+    public ScheduleEntity getScheduleEntity() {
+        return scheduleEntity;
+    }
     /*
     public void setEmployeeEntity(EmployeeEntity employeeEntity){
         this.scheduleEntity.get().setEmployee(employeeEntity);
@@ -100,9 +93,7 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
         return this.employee;
     }
 
-    public ScheduleEntity getScheduleEntity() {
-        return this.scheduleEntity.get();
-    }
+
 
     @Override
     public ScheduleEntry createRecurrence() {

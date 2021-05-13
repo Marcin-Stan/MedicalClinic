@@ -13,9 +13,6 @@ public class ScheduleCalendar extends Calendar {
 
     private static int entryConsecutive = 1;
 
-    CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
-    List<EmployeeEntity> entityList = employeeEntityCRUD.getAll(EmployeeEntity.class);
-
     public ScheduleCalendar() {
         super();
         this.getName();
@@ -26,7 +23,7 @@ public class ScheduleCalendar extends Calendar {
     }
 
     public final ScheduleEntry createEntry(ZonedDateTime start, boolean fullDay){
-        ScheduleEntry entry = new ScheduleEntry(null);
+        ScheduleEntry entry = new ScheduleEntry();
         entry.setTitle("New Entry" + generateEntryConsecutive());
         entry.setInterval(new Interval(start.toLocalDate(), start.toLocalTime(), start.toLocalDate(), start.toLocalTime().plusHours(1)));
         entry.setFullDay(fullDay);

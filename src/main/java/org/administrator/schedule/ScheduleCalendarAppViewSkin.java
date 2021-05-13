@@ -32,6 +32,10 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
     List<ScheduleCalendar> calendarList = new ArrayList<>();
 
     CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
+    List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
+    List<ScheduleEntry> entryList = new ArrayList<>();
+
+    private boolean fromDatabase;
     //private final ScheduleSynManager syncManager;
 
     public ScheduleCalendarAppViewSkin(ScheduleCalendarAppView control) {
@@ -39,6 +43,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
 
         calendarView = control.getCalendarView();
         setCalendars();
+        setEntryFromDatabase();
         //syncManager = new ScheduleSynManager();
 
         calendarView.setEntryFactory(new ScheduleEntryCreateCallback());
@@ -48,11 +53,6 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
         calendarPane = new BorderPane();
         calendarPane.setCenter(calendarView);
 
-        //ScheduleAccount scheduleAccount = new ScheduleAccount();
-
-        //scheduleAccount.addCalendarListeners(syncManager);
-        //ScheduleTaskExecutor.getInstance().execute(new LoadAllCalendarsTask(scheduleAccount));
-
         getChildren().add(new StackPane(calendarPane));
 
         timeUpdateThread.start();
@@ -61,6 +61,21 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
 
     private void setCalendars(){
 
+        for(int i=0;i<departmentList.size();i++){
+            calendarList.add(new ScheduleCalendar());
+            calendarList.get(i).setName(departmentList.get(i).getName());
+            calendarList.get(i).setShortName(departmentList.get(i).getName().substring(8,12));
+            calendarList.get(i).setStyle(Calendar.Style.valueOf("STYLE"+String.valueOf(1+i)));
+            calendarList.get(i).addEventHandler(setCalendarEvent());
+        }
+
+        CalendarSource calendarSource = new CalendarSource("Gabinety");
+        calendarSource.getCalendars().addAll(calendarList);
+        this.calendarView.getCalendarSources().setAll(calendarSource);
+
+    }
+
+    private EventHandler<CalendarEvent> setCalendarEvent(){
         final ScheduleEntity[] scheduleEntity = new ScheduleEntity[1];
 
         EventHandler<CalendarEvent> handler = new EventHandler<CalendarEvent>() {
@@ -77,7 +92,10 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
                     scheduleEntityCRUD.update(scheduleEntityTemp,true);
                 }
 
-                if(calendarEvent.getEventType().equals(CalendarEvent.ENTRY_CALENDAR_CHANGED) && calendarEvent.getOldCalendar()==null) {
+                if(calendarEvent.getEventType().equals(CalendarEvent.ENTRY_CALENDAR_CHANGED)
+                        && calendarEvent.getOldCalendar()==null
+                        && !fromDatabase) {
+
                     scheduleEntity[0] = new ScheduleEntity(Integer.parseInt(scheduleEntry.getId()),
                             scheduleEntry.getStartDate(),
                             scheduleEntry.getEndDate(),
@@ -88,6 +106,8 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
 
                     scheduleEntityCRUD.save(scheduleEntity[0]);
                     scheduleEntry.setScheduleEntity(scheduleEntity[0]);
+
+
                 }
 
                 if(calendarEvent.getEventType().equals(CalendarEvent.ENTRY_FULL_DAY_CHANGED)){
@@ -107,37 +127,49 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
                     scheduleEntityTemp.setTimeFrom(scheduleEntry.getStartTime());
                     scheduleEntityTemp.setTimeTo(scheduleEntry.getEndTime());
                     scheduleEntityCRUD.update(scheduleEntityTemp,false);
-
                 }
 
             }
 
 
         };
-
-        for(int i=0;i<departmentList.size();i++){
-            calendarList.add(new ScheduleCalendar());
-            calendarList.get(i).setName(departmentList.get(i).getName());
-            calendarList.get(i).setShortName(departmentList.get(i).getName().substring(8,12));
-            calendarList.get(i).setStyle(Calendar.Style.valueOf("STYLE"+String.valueOf(1+i)));
-            calendarList.get(i).addEventHandler(handler);
-        }
-
-        CalendarSource familyCalendarSource = new CalendarSource("Gabinety");
-        familyCalendarSource.getCalendars().addAll(calendarList);
-        this.calendarView.getCalendarSources().setAll(familyCalendarSource);
-
+        return handler;
     }
 
-    private List<ScheduleEntry> setEntryFromDatabase(){
-        CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
-        List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
-        List<ScheduleEntry> entryList = new ArrayList<>();
+    private void setEntryFromDatabase(){
+        List<ScheduleEntry> entryList = getEntryListFromDatabase();
+        fromDatabase=true;
+        for(int i=0;i<entryList.size();i++){
+
+            for(int j=0; j<calendarList.size();j++){
+                if(entryList.get(i).getScheduleEntity().getDepartment().getName().equals(calendarList.get(j).getName())){
+                    calendarList.get(j).addEntry(entryList.get(i));
+                    break;
+                }
+            }
+        }
+        fromDatabase=false;
+    }
+
+    private List<ScheduleEntry> getEntryListFromDatabase(){
+
         for(int i = 0; i<scheduleList.size();i++){
-            Interval interval = new Interval(scheduleList.get(i).getStartDate(),scheduleList.get(i).getTimeFrom(),scheduleList.get(i).getEndDate(),scheduleList.get(i).getTimeTo());
-            entryList.add(new ScheduleEntry(scheduleList.get(i).getEmployee()));
+            Interval interval = new Interval(scheduleList.get(i).getStartDate(),
+                    scheduleList.get(i).getTimeFrom(),
+                    scheduleList.get(i).getEndDate(),
+                    scheduleList.get(i).getTimeTo()
+            );
+
+            entryList.add(new ScheduleEntry());
+            //entryList.get(i).setEmployee(scheduleList.get(i).getEmployee());
             entryList.get(i).setInterval(interval);
             entryList.get(i).setId(String.valueOf(scheduleList.get(i).getId()));
+            entryList.get(i).setScheduleEntity(scheduleList.get(i));
+
+            if(scheduleList.get(i).getEmployee() != null){
+                entryList.get(i).setTitle(scheduleList.get(i).getEmployee().getFirstName()+" ");
+            }
+
         }
         return entryList;
     }

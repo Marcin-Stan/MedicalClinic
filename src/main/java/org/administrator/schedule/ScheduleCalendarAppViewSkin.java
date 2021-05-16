@@ -54,8 +54,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
         getChildren().add(new StackPane(calendarPane));
 
         timeUpdateThread.start();
-
-    }
+      }
 
     private void setCalendars(){
 
@@ -80,6 +79,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
             @Override
             public void handle(CalendarEvent calendarEvent) {
                 ScheduleEntry scheduleEntry = (ScheduleEntry) calendarEvent.getEntry();
+
                 if(!calendarEvent.getSource().equals(scheduleEntry.getCalendar())){
                     scheduleEntityCRUD.delete(scheduleEntry.getScheduleEntity());
                     calendarView.getDayPage().refreshData();
@@ -166,7 +166,6 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
             entryList.get(i).setInterval(interval);
             entryList.get(i).setId(String.valueOf(scheduleList.get(i).getId()));
             entryList.get(i).setScheduleEntity(scheduleList.get(i));
-            //entryList.get(i).setEmployee(scheduleList.get(i).getEmployee());
             entryList.get(i).setEmployee(scheduleList.get(i).getEmployee());
 
             if(scheduleList.get(i).getEmployee() != null){
@@ -219,8 +218,5 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
             return new ScheduleEntryPopOverContentPane(entry, param.getDateControl().getCalendars());
         }
     }
-
-
-
 
 }

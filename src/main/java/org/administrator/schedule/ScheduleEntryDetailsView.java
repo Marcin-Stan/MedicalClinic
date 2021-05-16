@@ -13,18 +13,13 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
     CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
     ComboBox<EmployeeEntity> employeeEntityComboBox = new ComboBox<>();
 
-    //private ScheduleEntry entry;
 
     public ScheduleEntryDetailsView(ScheduleEntry entry) {
         super(entry);
-        //this.entry=entry;
 
         employeeEntityComboBox.getItems().setAll(employeeEntityCRUD.getAll(EmployeeEntity.class));
         employeeEntityComboBox.valueProperty().bindBidirectional(entry.getEmployeeProperty());
 
-        //employeeEntityComboBox.setValue(entry.getScheduleEntity().getEmployee());
-
-        //employeeEntityComboBox.setValue(entry.getEmployee());
 
         GridPane box = (GridPane) getChildren().get(0);
         Label employee = new Label("Employee");

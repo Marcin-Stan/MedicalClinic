@@ -51,16 +51,6 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
             }
         };
 
-        /*
-        this.employee.addListener((Observable obs) -> {
-                System.out.println("Testorowo");
-                getCalendar().fireEvent(new CalendarEvent(
-                        CalendarEvent.ENTRY_USER_OBJECT_CHANGED, (ScheduleCalendar) getCalendar(), ScheduleEntry.this));
-        });
-         */
-        //this.setEmployee(emp);
-
-
     }
 
     public void setEmployee(EmployeeEntity employee) {

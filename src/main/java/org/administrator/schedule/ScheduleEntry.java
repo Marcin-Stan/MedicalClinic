@@ -22,19 +22,31 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
 
     private ScheduleEntity scheduleEntity;
     private SimpleObjectProperty<EmployeeEntity> employee;
-    public ScheduleEntry(){
+
+    public Boolean isFromDatabase;
+
+    public ScheduleEntry(boolean isFromDatabased){
         super();
+        this.isFromDatabase = isFromDatabased;
 
         this.employee = new SimpleObjectProperty<>(this,"employee"){
             @Override
             public void set(EmployeeEntity employeeEntity) {
-                EmployeeEntity employeeEntity1 = this.get();
-                ScheduleCalendar scheduleCalendar = (ScheduleCalendar) ScheduleEntry.this.getCalendar();
-                if(employeeEntity!=null ){
-                    super.set(employeeEntity);
-                    scheduleCalendar.fireEvent(new CalendarEvent(CalendarEvent.ENTRY_USER_OBJECT_CHANGED, scheduleCalendar,ScheduleEntry.this,employeeEntity1));
-                    //scheduleCalendar.fireEvent(new ScheduleCalendarEvent(ScheduleCalendarEvent.ENTRY_ATTENDEES_CHANGED,scheduleCalendar,ScheduleEntry.this,employeeEntity1));
+                if (!isFromDatabase) {
+                    EmployeeEntity employeeEntity1 = this.get();
+                    ScheduleCalendar scheduleCalendar = (ScheduleCalendar) ScheduleEntry.this.getCalendar();
+                    if(employeeEntity!=null ){
+                        super.set(employeeEntity);
+                        scheduleCalendar.fireEvent(new CalendarEvent(CalendarEvent.ENTRY_USER_OBJECT_CHANGED, scheduleCalendar,ScheduleEntry.this,employeeEntity1));
+                        //scheduleCalendar.fireEvent(new ScheduleCalendarEvent(ScheduleCalendarEvent.ENTRY_ATTENDEES_CHANGED,scheduleCalendar,ScheduleEntry.this,employeeEntity1));
+                    }
+                }else {
+                    if(employeeEntity!=null ){
+                        super.set(employeeEntity);
+                    }
+                    isFromDatabase = false;
                 }
+
 
             }
         };
@@ -44,14 +56,17 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
                 System.out.println("Testorowo");
                 getCalendar().fireEvent(new CalendarEvent(
                         CalendarEvent.ENTRY_USER_OBJECT_CHANGED, (ScheduleCalendar) getCalendar(), ScheduleEntry.this));
-
         });
-
          */
         //this.setEmployee(emp);
 
 
     }
+
+    public void setEmployee(EmployeeEntity employee) {
+        this.employee.set(employee);
+    }
+
     public void setScheduleEntity(ScheduleEntity scheduleEntity) {
         this.scheduleEntity = scheduleEntity;
     }
@@ -59,34 +74,9 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
     public ScheduleEntity getScheduleEntity() {
         return scheduleEntity;
     }
-    /*
-    public void setEmployeeEntity(EmployeeEntity employeeEntity){
-        this.scheduleEntity.get().setEmployee(employeeEntity);
-
-    }
-
-     */
-
-
 
     public SimpleObjectProperty<EmployeeEntity> employeeProperty() {
         return employee;
-    }
-
-    public final void setEmployee(EmployeeEntity employeeEntity){
-        this.employee = new SimpleObjectProperty<>(this,"employee"){
-            @Override
-            public void set(EmployeeEntity employeeEntity) {
-                EmployeeEntity employeeEntity1 = this.get();
-                ScheduleCalendar scheduleCalendar = (ScheduleCalendar) ScheduleEntry.this.getCalendar();
-                if(employeeEntity!=null ){
-                    super.set(employeeEntity);
-                    scheduleCalendar.fireEvent(new CalendarEvent(CalendarEvent.ENTRY_USER_OBJECT_CHANGED, scheduleCalendar,ScheduleEntry.this,employeeEntity1));
-                    //scheduleCalendar.fireEvent(new ScheduleCalendarEvent(ScheduleCalendarEvent.ENTRY_ATTENDEES_CHANGED,scheduleCalendar,ScheduleEntry.this,employeeEntity1));
-                }
-
-            }
-        };
     }
 
     public final EmployeeEntity getEmployee(){
@@ -96,18 +86,6 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
     public final SimpleObjectProperty getEmployeeProperty(){
         return this.employee;
     }
-
-
-
-    @Override
-    public ScheduleEntry createRecurrence() {
-        return new ScheduleEntry();
-    }
-
-
-
-
-
 
 
 }

@@ -18,6 +18,7 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
     public ScheduleEntryDetailsView(ScheduleEntry entry) {
         super(entry);
         //this.entry=entry;
+
         employeeEntityComboBox.getItems().setAll(employeeEntityCRUD.getAll(EmployeeEntity.class));
         employeeEntityComboBox.valueProperty().bindBidirectional(entry.getEmployeeProperty());
 
@@ -36,6 +37,7 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
         box.getChildren().remove(5);
         box.getChildren().remove(4);
 
+
         box.add(employeeEntityComboBox, 1, 3);
         box.add(employee,0,3);
         GridPane.setValignment(employeeEntityComboBox, VPos.TOP);
@@ -43,4 +45,6 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
         box.getChildren().get(0);
 
     }
+
+
 }

@@ -6,27 +6,32 @@ import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
 import org.database.schedule.ScheduleEntity;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 public class ScheduleCalendar extends Calendar {
 
-    private static int entryConsecutive = 1;
+    CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
+    List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
 
     public ScheduleCalendar() {
         super();
         this.getName();
     }
 
-    private static int generateEntryConsecutive() {
-        return entryConsecutive++;
-    }
-
-    public final ScheduleEntry createEntry(ZonedDateTime start, boolean fullDay){
-        ScheduleEntry entry = new ScheduleEntry();
-        entry.setTitle("New Entry" + generateEntryConsecutive());
+    public final ScheduleEntry createEntry(ZonedDateTime start, boolean fullDay) {
+        int id;
+        ScheduleEntry entry;
+        entry = new ScheduleEntry(false);
+        entry.setTitle("Wybierz pracownika");
         entry.setInterval(new Interval(start.toLocalDate(), start.toLocalTime(), start.toLocalDate(), start.toLocalTime().plusHours(1)));
         entry.setFullDay(fullDay);
+        if(scheduleList.isEmpty()) id=0;
+        else id = scheduleList.get(scheduleList.size()-1).getId()+1;
+
+        entry.setId(String.valueOf(id));
+
         return entry;
     }
     private String id;

@@ -30,19 +30,6 @@ import java.util.Random;
 //EntryDetailsVIew trzeba zmienić
 public class Schedule extends Application {
 
-    CRUD<DepartmentEntity> departmentEntityCRUD = new CRUD<>();
-    List<DepartmentEntity> departmentList = departmentEntityCRUD.getAll(DepartmentEntity.class);
-
-    CRUD<ScheduleEntity> scheduleEntityCRUD = new CRUD<>();
-    List<ScheduleEntity> scheduleList = scheduleEntityCRUD.getAll(ScheduleEntity.class);
-
-    CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
-    List<EmployeeEntity> entityList = employeeEntityCRUD.getAll(EmployeeEntity.class);
-
-    List<Calendar> calendarList = new ArrayList<>();
-    List<ScheduleEntry> entryList = new ArrayList<>();
-
-
     @Override
     public void start(Stage primaryStage) {
 

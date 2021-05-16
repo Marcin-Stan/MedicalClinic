@@ -22,7 +22,6 @@ public class ScheduleEntryPopOverContentPane extends PopOverContentPane {
         requireNonNull(entry);
         EntryHeaderView header = new EntryHeaderView(entry, allCalendars);
         header.getChildren().get(2).setVisible(false);
-        System.out.println(header.getChildren().get(1));
         ScheduleEntryDetailsView details = new ScheduleEntryDetailsView(entry);
         PopOverTitledPane detailsPane = new PopOverTitledPane("Schedule", details);
 

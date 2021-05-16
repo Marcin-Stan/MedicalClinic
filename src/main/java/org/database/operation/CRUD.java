@@ -18,8 +18,13 @@ public class CRUD<T> {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
 
+    private static SessionFactory sessionFactory;
+    static {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
+
     public List<T> getAll(Class<T> type) {
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
 
         try{
             return session.createQuery("FROM "+type.getSimpleName(),type).getResultList();
@@ -32,7 +37,7 @@ public class CRUD<T> {
     }
 
     public void update(T entity, boolean showInfo){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
         String errorMessage="";
         try{
@@ -57,7 +62,7 @@ public class CRUD<T> {
     }
 
     public boolean delete(T entity){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
             session.delete(entity);
@@ -77,7 +82,7 @@ public class CRUD<T> {
     }
 
     public boolean save(T entity){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
         String errorMessage="";
         try{

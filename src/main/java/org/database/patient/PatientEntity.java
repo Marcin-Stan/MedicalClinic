@@ -146,4 +146,10 @@ public class PatientEntity implements Serializable {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
+
+    @Override
+    public String toString() {
+        return firstName+" "+lastName+" "+peselNumber;
+
+    }
 }

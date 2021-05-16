@@ -1,4 +1,4 @@
-package org.administrator.schedule;
+package org.scheduleCalendar;
 
 import com.calendarfx.model.*;
 import com.calendarfx.view.*;
@@ -17,7 +17,6 @@ import org.database.schedule.ScheduleEntity;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;

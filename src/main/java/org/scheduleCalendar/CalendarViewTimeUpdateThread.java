@@ -1,4 +1,4 @@
-package org.administrator.schedule;
+package org.scheduleCalendar;
 
 import com.calendarfx.view.CalendarView;
 import javafx.application.Platform;

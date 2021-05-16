@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.administrator.schedule.Schedule;
+import org.scheduleCalendar.Schedule;
 
 import java.io.IOException;
 import java.net.URL;

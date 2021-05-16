@@ -1,22 +1,9 @@
-package org.administrator.schedule;
-import com.calendarfx.model.Calendar;
+package org.scheduleCalendar;
 import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.Entry;
-import com.calendarfx.model.Interval;
-import javafx.beans.Observable;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
 import org.database.employee.EmployeeEntity;
-import org.database.operation.CRUD;
 import org.database.schedule.ScheduleEntity;
-import org.joda.time.DateTime;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 public class ScheduleEntry extends Entry<ScheduleEntity>{
 

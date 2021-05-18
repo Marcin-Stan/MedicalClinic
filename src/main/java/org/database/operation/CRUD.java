@@ -18,7 +18,7 @@ public class CRUD<T> {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
 
-    private static SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
     static {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }

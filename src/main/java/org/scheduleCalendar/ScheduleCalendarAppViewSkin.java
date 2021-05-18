@@ -36,11 +36,11 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
 
     private boolean fromDatabase;
 
-    public ScheduleCalendarAppViewSkin(ScheduleCalendarAppView control) {
+    public ScheduleCalendarAppViewSkin(ScheduleCalendarAppView control,boolean isEditable) {
         super(control);
 
         calendarView = control.getCalendarView();
-        setCalendars();
+        setCalendars(isEditable);
         setEntryFromDatabase();
 
         calendarView.setEntryFactory(new ScheduleEntryCreateCallback());
@@ -55,7 +55,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
         timeUpdateThread.start();
       }
 
-    private void setCalendars(){
+    private void setCalendars(boolean isEditable){
 
         for(int i=0;i<departmentList.size();i++){
             calendarList.add(new ScheduleCalendar());
@@ -63,6 +63,8 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
             calendarList.get(i).setShortName(departmentList.get(i).getName().substring(8,12));
             calendarList.get(i).setStyle(Calendar.Style.valueOf("STYLE"+String.valueOf(1+i)));
             calendarList.get(i).addEventHandler(setCalendarEvent());
+            if (!isEditable)
+                calendarList.get(i).setReadOnly(true);
         }
 
         CalendarSource calendarSource = new CalendarSource("Gabinety");

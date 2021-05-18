@@ -18,13 +18,16 @@ public class VisitEntity implements Serializable {
     @GeneratedValue
     private int id;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "date_start")
+    private Date dateStart;
 
-    @Column(name = "start_time")
+    @Column(name = "date_end")
+    private Date dateEnd;
+
+    @Column(name = "time_from")
     private Time startTime;
 
-    @Column(name="end_time")
+    @Column(name="time_to")
     private Time endTime;
 
     @Column(name="is_paid")
@@ -50,10 +53,11 @@ public class VisitEntity implements Serializable {
 
     public VisitEntity() { }
 
-    public VisitEntity(int id, Date date, Time startTime, Time endTime, Boolean isPaid, String patientNote,
+    public VisitEntity(int id, Date dateStart, Date dateEnd, Time startTime, Time endTime, Boolean isPaid, String patientNote,
                        byte[] medicalExamination, ServiceEntity service, EmployeeEntity employee, PatientEntity patient) {
         this.id = id;
-        this.date = date;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isPaid = isPaid;
@@ -72,12 +76,20 @@ public class VisitEntity implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateStart() {
+        return dateStart;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateStart(Date date) {
+        this.dateStart = date;
+    }
+
+    public Date getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(Date dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public Time getStartTime() {

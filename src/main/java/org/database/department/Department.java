@@ -10,7 +10,7 @@ import javax.persistence.NoResultException;
 
 public class Department {
 
-    private static SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
     static {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }

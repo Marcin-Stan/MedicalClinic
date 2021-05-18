@@ -3,6 +3,7 @@ package org.database.employee;
 import javafx.scene.control.Alert;
 import org.employee.EmployeeType;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.validator.AlertValidator;
@@ -20,11 +21,12 @@ import java.util.Set;
 
 public class Employee {
 
-    static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    static Validator validator = factory.getValidator();
-
+    private static final SessionFactory sessionFactory;
+    static {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
     public static boolean checkEmployeeLoginAndPassword(String login, String password){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         if(getEmployeeIdByLogin(login)!=0){
             String hql = "SELECT e from EmployeeEntity e WHERE e.password = :password and e.id = :id";
             Query<EmployeeEntity> query = session.createQuery(hql,EmployeeEntity.class);
@@ -46,7 +48,7 @@ public class Employee {
 
 
     private static int getEmployeeIdByLogin(String login){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         String hql = "SELECT e from EmployeeEntity e WHERE e.login = :login";
         Query<EmployeeEntity> query = session.createQuery(hql,EmployeeEntity.class);
         query.setParameter("login",login);
@@ -67,7 +69,7 @@ public class Employee {
     }
 
     public static EmployeeType getEmployeeTypeByLogin(String login){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         String hql = "SELECT e from EmployeeEntity e WHERE e.login = :login";
         Query<EmployeeEntity> query = session.createQuery(hql,EmployeeEntity.class);
         query.setParameter("login",login);

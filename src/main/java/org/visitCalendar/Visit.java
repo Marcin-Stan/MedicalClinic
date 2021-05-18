@@ -1,20 +1,14 @@
-package org.scheduleCalendar;
-import com.calendarfx.view.*;
+package org.visitCalendar;
+
+import com.calendarfx.view.CalendarView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.security.Policy;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-//EntryDetailsVIew trzeba zmienić
-public class Schedule extends Application {
-    private final boolean isEditable;
-
-    public Schedule(boolean isEditable) {
-        this.isEditable = isEditable;
-    }
+public class Visit extends Application {
 
     @Override
     public void start(Stage primaryStage) {
@@ -24,16 +18,12 @@ public class Schedule extends Application {
         calendarView.setTime(LocalTime.now());
         calendarView.setShowDeveloperConsole(Boolean.getBoolean("calendarfx.developer"));
 
-        ScheduleCalendarAppView appView = new ScheduleCalendarAppView(calendarView,isEditable);
+        //calendarView.setEntryEditPolicy(entryEditParameter -> false);
+
+        VisitCalendarAppView appView = new VisitCalendarAppView(calendarView);
         appView.getStylesheets().add(CalendarView.class.getResource("calendar.css").toExternalForm());
 
-        if(!isEditable) {
-            calendarView.setEntryEditPolicy(entryEditParameter -> false);
-            calendarView.setEntryDetailsCallback(entryDetailsParameter -> false);
-
-        }
-
-        primaryStage.setTitle("Schedule Calendar");
+        primaryStage.setTitle("Visit Calendar");
         primaryStage.setScene(new Scene(appView));
         primaryStage.setWidth(1400);
         primaryStage.setHeight(950);
@@ -47,7 +37,4 @@ public class Schedule extends Application {
         System.setProperty("calendarfx.developer", "true");
         launch(args);
     }
-
-
-
 }

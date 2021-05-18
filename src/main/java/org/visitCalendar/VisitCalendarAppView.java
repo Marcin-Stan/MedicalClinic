@@ -1,21 +1,21 @@
-package org.scheduleCalendar;
+package org.visitCalendar;
 
 import com.calendarfx.view.CalendarFXControl;
 import com.calendarfx.view.CalendarView;
 import javafx.scene.control.Skin;
-public class ScheduleCalendarAppView extends CalendarFXControl {
+
+public class VisitCalendarAppView extends CalendarFXControl {
 
     private final CalendarView calendarView;
-    private boolean isEditable;
-    public ScheduleCalendarAppView(CalendarView calendarView, boolean isEditable) {
+
+    public VisitCalendarAppView(CalendarView calendarView) {
         super();
         this.calendarView = calendarView;
-        this.isEditable = isEditable;
     }
 
     @Override
     protected Skin<?> createDefaultSkin() {
-        return new ScheduleCalendarAppViewSkin(this,isEditable);
+        return new VisitCalendarAppViewSkin(this);
     }
 
 

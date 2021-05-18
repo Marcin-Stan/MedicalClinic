@@ -13,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.database.employee.Employee;
 import org.employee.EmployeeType;
+import org.scheduleCalendar.Schedule;
+import org.visitCalendar.Visit;
 
 import java.io.IOException;
 
@@ -47,7 +49,9 @@ public class LoginController {
 
             switch (employeeType){
                 case Pielęgniarka:
-                    System.out.println(employeeType.getEmployeeType());
+                    Stage stage2 = new Stage();
+                    Visit visit = new Visit();
+                    visit.start(stage2);
                     break;
                 case Administrator:
                     Parent root = null;

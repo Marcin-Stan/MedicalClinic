@@ -3,6 +3,7 @@ package org.visitCalendar;
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
 import com.calendarfx.view.AllDayView;
 import com.calendarfx.view.CalendarView;
 import com.calendarfx.view.DateControl;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SkinBase;
 import javafx.scene.layout.BorderPane;
@@ -24,6 +26,8 @@ import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import org.database.department.DepartmentEntity;
 import org.database.operation.CRUD;
+import org.database.schedule.ScheduleEntity;
+import org.database.visit.VisitEntity;
 import org.scheduleCalendar.*;
 
 import java.io.IOException;
@@ -44,12 +48,20 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
     CRUD<DepartmentEntity> departmentEntityCRUD = new CRUD<>();
     List<DepartmentEntity> departmentList = departmentEntityCRUD.getAll(DepartmentEntity.class);
 
+    CRUD<VisitEntity> visitEntityCRUD = new CRUD<>();
+    List<VisitEntity> visitList = visitEntityCRUD.getAll(VisitEntity.class);
+
+    List<VisitEntry> entryList = new ArrayList<>();
+
+    private boolean fromDatabase;
+
+
     public VisitCalendarAppViewSkin(VisitCalendarAppView control) {
         super(control);
 
         calendarView = control.getCalendarView();
         setCalendars();
-        //setEntryFromDatabase();
+        setEntryFromDatabase();
 
         calendarView.setEntryFactory(new VisitCalendarAppViewSkin.VisitEntryCreateCallback());
         calendarView.setEntryDetailsPopOverContentCallback(new VisitCalendarAppViewSkin.VisitEntryPopOverContentProvider());
@@ -66,7 +78,7 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
     private void setStackPane(){
         StackPane stackPane = new StackPane(calendarPane);
         Button scheduleButton = new Button("Schedule");
-        Button employeeButton = new Button("Employee");
+        Button patientButton = new Button("Patient");
 
         scheduleButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -77,11 +89,16 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
             }
         });
 
-        employeeButton.setOnAction(new EventHandler<ActionEvent>() {
+        patientButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 try {
-                    StackPane pane =  FXMLLoader.load(((getClass().getResource("administrator/patient/Patient.fxml"))));
+                    StackPane pane =  FXMLLoader.load(((getClass().getResource("patient/Patient.fxml"))));
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(pane);
+                    stage.setScene(scene);
+                    stage.setResizable(true);
+                    stage.show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -89,7 +106,7 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
         });
 
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(scheduleButton,employeeButton);
+        hBox.getChildren().addAll(scheduleButton,patientButton);
         hBox.setMinSize(135,25);
         hBox.setMaxSize(135,25);
 
@@ -116,6 +133,39 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
         this.calendarView.getCalendarSources().setAll(calendarSource);
 
     }
+
+    private void setEntryFromDatabase() {
+        List<VisitEntry> entryList = getEntryListFromDatabase();
+        fromDatabase = true;
+        for (int i = 0; i < entryList.size(); i++) {
+            for (int j = 0; i < calendarList.size(); j++) {
+                if (entryList.get(i).getVisitEntity().getService().getDepartmentEntity().getName().equals(calendarList.get(j).getName())) {
+                    calendarList.get(j).addEntry(entryList.get(i));
+                    break;
+                }
+            }
+            fromDatabase = false;
+        }
+    }
+
+
+    private List<VisitEntry> getEntryListFromDatabase(){
+        for(int i=0;i<visitList.size();i++){
+            Interval interval = new Interval(visitList.get(i).getStartDate(),
+                    visitList.get(i).getTimeFrom(),
+                    visitList.get(i).getEndDate(),
+                    visitList.get(i).getTimeTo()
+            );
+
+            entryList.add(new VisitEntry(true));
+            entryList.get(i).setInterval(interval);
+            entryList.get(i).setId(String.valueOf(visitList.get(i).getId()));
+            entryList.get(i).setVisitEntity(visitList.get(i));
+        }
+        return entryList;
+    }
+
+
 
     private static class VisitEntryCreateCallback implements Callback<DateControl.CreateEntryParameter, Entry<?>> {
 

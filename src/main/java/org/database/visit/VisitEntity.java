@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name="visit")
@@ -19,16 +21,16 @@ public class VisitEntity implements Serializable {
     private int id;
 
     @Column(name = "date_start")
-    private Date dateStart;
+    private LocalDate startDate;
 
     @Column(name = "date_end")
-    private Date dateEnd;
+    private LocalDate endDate;
 
     @Column(name = "time_from")
-    private Time startTime;
+    private LocalTime timeFrom;
 
     @Column(name="time_to")
-    private Time endTime;
+    private LocalTime timeTo;
 
     @Column(name="is_paid")
     private Boolean isPaid;
@@ -53,13 +55,13 @@ public class VisitEntity implements Serializable {
 
     public VisitEntity() { }
 
-    public VisitEntity(int id, Date dateStart, Date dateEnd, Time startTime, Time endTime, Boolean isPaid, String patientNote,
+    public VisitEntity(int id, LocalDate startDate, LocalDate endDate, LocalTime timeFrom, LocalTime timeTo, Boolean isPaid, String patientNote,
                        byte[] medicalExamination, ServiceEntity service, EmployeeEntity employee, PatientEntity patient) {
         this.id = id;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
         this.isPaid = isPaid;
         this.patientNote = patientNote;
         this.medicalExamination = medicalExamination;
@@ -76,36 +78,36 @@ public class VisitEntity implements Serializable {
         this.id = id;
     }
 
-    public Date getDateStart() {
-        return dateStart;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDateStart(Date date) {
-        this.dateStart = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getDateEnd() {
-        return dateEnd;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
-    public Time getStartTime() {
-        return startTime;
+    public LocalTime getTimeFrom() {
+        return timeFrom;
     }
 
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
+    public void setTimeFrom(LocalTime timeFrom) {
+        this.timeFrom = timeFrom;
     }
 
-    public Time getEndTime() {
-        return endTime;
+    public LocalTime getTimeTo() {
+        return timeTo;
     }
 
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
+    public void setTimeTo(LocalTime timeTo) {
+        this.timeTo = timeTo;
     }
 
     public Boolean getPaid() {

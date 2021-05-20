@@ -17,7 +17,7 @@ public class VisitEntry extends Entry<VisitEntity> {
     private SimpleObjectProperty<PatientEntity> patient;
     private SimpleObjectProperty<ServiceEntity> service;
     private SimpleObjectProperty<Boolean> isPaid;
-
+    private VisitEntity visitEntity;
     public Boolean isFromDatabase;
     public VisitEntry(boolean isFromDatabased) {
         super();
@@ -117,6 +117,13 @@ public class VisitEntry extends Entry<VisitEntity> {
     }
 
 
+    public VisitEntity getVisitEntity() {
+        return visitEntity;
+    }
+
+    public void setVisitEntity(VisitEntity visitEntity) {
+        this.visitEntity = visitEntity;
+    }
 
     public EmployeeEntity getEmployee() {
         return employee.get();

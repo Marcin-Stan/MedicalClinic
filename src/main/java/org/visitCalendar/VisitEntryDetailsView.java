@@ -114,8 +114,13 @@ public class VisitEntryDetailsView extends EntryDetailsView {
 
             @Override
             public PatientEntity fromString(String s) {
-                String pesel = s.replaceAll("\\D+","");
-                return Patient.getPatientByPeselNumber(pesel);
+                if(!s.isEmpty())
+                {
+                    String pesel = s.replaceAll("\\D+","");
+                    return Patient.getPatientByPeselNumber(pesel);
+                }
+
+                return null;
             }
         });
 

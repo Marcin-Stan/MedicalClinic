@@ -35,7 +35,7 @@ public class ManageVisitController implements Initializable, Manage<VisitEntity>
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        textAreaVisit.setEditable(false);
     }
 
     @Override

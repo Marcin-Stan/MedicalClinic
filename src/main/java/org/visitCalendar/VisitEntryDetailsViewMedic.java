@@ -5,11 +5,13 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.database.department.Department;
 import org.database.employee.EmployeeEntity;
@@ -19,6 +21,7 @@ import org.database.patient.PatientEntity;
 import org.database.schedule.Schedule;
 import org.database.service.Service;
 import org.database.service.ServiceEntity;
+import org.fxPrint.FxPrint;
 import org.validator.AlertValidator;
 
 import java.util.List;
@@ -36,9 +39,10 @@ public class VisitEntryDetailsViewMedic extends EntryDetailsView {
     CheckBox isPaid= new CheckBox();
     CheckBox isFinished= new CheckBox();
     TextArea textArea = new TextArea();
+    Button buttonPrint = new Button("Print");
     public VisitEntryDetailsViewMedic(VisitEntry entry){
         super(entry);
-
+        setButtonPrint(entry);
         if(entry.getEmployee()!=null){
             employeeEntityComboBox.valueProperty().bindBidirectional(entry.employeeProperty());
         }
@@ -100,6 +104,9 @@ public class VisitEntryDetailsViewMedic extends EntryDetailsView {
         box.add(isFinished ,1,8);
         box.add(finished,0,8);
         GridPane.setValignment(isFinished,VPos.TOP);
+
+        box.add(buttonPrint,1,9);
+        GridPane.setValignment(buttonPrint,VPos.TOP);
         //box.getChildren().get(0);
     }
 
@@ -151,7 +158,22 @@ public class VisitEntryDetailsViewMedic extends EntryDetailsView {
         patientEntityComboBox.setDisable(true);
     }
 
-    private void setEmployeeEntityComboBox(VisitEntry entry){
-        // employeeEntityComboBox.addEventHandler();
+    private void setButtonPrint(VisitEntry entry){
+        TextArea textArea = new TextArea();
+        textArea.setWrapText(true);
+        textArea.setText("Pacjent:"+entry.getPatient()+"\n"+
+                "Pracownik: "+ entry.getEmployee()+"\n"+
+                "Data:" + entry.getEndDate()+"\n"+
+                "Godzina: " + entry.getEndTime()+"\n"+
+                "Notatka: "+entry.getNote());
+
+        buttonPrint.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Stage stage = new Stage();
+                FxPrint fxPrint = new FxPrint(textArea);
+                fxPrint.start(stage);
+            }
+        });
     }
 }

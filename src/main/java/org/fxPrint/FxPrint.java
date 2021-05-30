@@ -21,7 +21,7 @@ public class FxPrint extends Application
 
     private TextArea textArea;
 
-    FxPrint(TextArea textArea){
+    public FxPrint(TextArea textArea){
         this.textArea=textArea;
     }
 
@@ -52,7 +52,7 @@ public class FxPrint extends Application
         });
 
         // Create the Status Box
-        HBox jobStatusBox = new HBox(5, new Label("Job Status: "), jobStatus);
+        HBox jobStatusBox = new HBox(5, new Label("Status wydruku: "), jobStatus);
         // Create the Button Box
         HBox buttonBox = new HBox(printSetupButton);
 

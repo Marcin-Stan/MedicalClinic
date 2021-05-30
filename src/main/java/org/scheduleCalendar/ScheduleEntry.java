@@ -12,10 +12,13 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
 
     public Boolean isFromDatabase;
 
-    public ScheduleEntry(boolean isFromDatabased){
+    public ScheduleEntry(){
         super();
-        this.isFromDatabase = isFromDatabased;
+        setEmployeeProperty();
 
+    }
+
+    private void setEmployeeProperty(){
         this.employee = new SimpleObjectProperty<>(this,"employee"){
             @Override
             public void set(EmployeeEntity employeeEntity) {
@@ -37,14 +40,15 @@ public class ScheduleEntry extends Entry<ScheduleEntity>{
 
             }
         };
-
     }
 
-    public void setEmployee(EmployeeEntity employee) {
+    public void setEmployee(EmployeeEntity employee, Boolean isFromDatabase) {
+        this.isFromDatabase = isFromDatabase;
         this.employee.set(employee);
     }
 
-    public void setScheduleEntity(ScheduleEntity scheduleEntity) {
+    public void setScheduleEntity(ScheduleEntity scheduleEntity, Boolean isFromDatabase) {
+        this.isFromDatabase = isFromDatabase;
         this.scheduleEntity = scheduleEntity;
     }
 

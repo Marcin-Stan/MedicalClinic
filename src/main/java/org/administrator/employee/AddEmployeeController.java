@@ -18,9 +18,16 @@ import org.employee.Sex;
 import org.image.ImageFx;
 import org.table.Add;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.ResourceBundle;
 
 public class AddEmployeeController implements Initializable, Add {
@@ -88,7 +95,7 @@ public class AddEmployeeController implements Initializable, Add {
     }
 
     @FXML
-    public void setSaveButton(){
+    public void setSaveButton() throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         EmployeeEntity newEmploee = new EmployeeEntity();
         newEmploee.setFirstName(firstNameTextField.getText());
@@ -96,7 +103,7 @@ public class AddEmployeeController implements Initializable, Add {
         newEmploee.setAddress(addressTextField.getText());
         newEmploee.setTelNumber(telNumberTextField.getText());
         newEmploee.setLogin(loginTextField.getText());
-        newEmploee.setPassword(passwordTextField.getText());
+        //newEmploee.setPassword(passwordTextField.getText());
         newEmploee.setPhoto(ImageFx.getimage(imagePathTxtField));
         newEmploee.setSpecializationEntity(specializationComboBox.getValue());
         newEmploee.setEmployeeType(roleComboBox.getValue());
@@ -104,7 +111,7 @@ public class AddEmployeeController implements Initializable, Add {
         newEmploee.setCreationDate((creationDateDatePicker.getValue()));
         newEmploee.setBirtDate((birthDateDatePicker.getValue()));
 
-
+        newEmploee.setPassword(AES256.encrypt(passwordTextField.getText()));
         if(employeeEntityCRUD.save(newEmploee)){
 
             try {
@@ -124,7 +131,5 @@ public class AddEmployeeController implements Initializable, Add {
     public void addsImage() throws MalformedURLException {
         imageFx.addImage(imagePathTxtField,itemImage);
     }
-
-
 
 }

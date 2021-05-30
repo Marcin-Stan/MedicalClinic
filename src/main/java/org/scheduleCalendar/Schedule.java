@@ -23,14 +23,13 @@ public class Schedule extends Application {
         calendarView.setToday(LocalDate.now());
         calendarView.setTime(LocalTime.now());
         calendarView.setShowDeveloperConsole(Boolean.getBoolean("calendarfx.developer"));
-
+        calendarView.setShowPrintButton(false);
         ScheduleCalendarAppView appView = new ScheduleCalendarAppView(calendarView,isEditable);
         appView.getStylesheets().add(CalendarView.class.getResource("calendar.css").toExternalForm());
 
         if(!isEditable) {
             calendarView.setEntryEditPolicy(entryEditParameter -> false);
             calendarView.setEntryDetailsCallback(entryDetailsParameter -> false);
-
         }
 
         primaryStage.setTitle("Schedule Calendar");
@@ -41,7 +40,6 @@ public class Schedule extends Application {
         primaryStage.show();
 
     }
-
 
     public static void main(String[] args) {
         System.setProperty("calendarfx.developer", "true");

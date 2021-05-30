@@ -36,9 +36,11 @@ module org {
     opens org.administrator.specialization to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.visitCalendar.patient to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.scheduleCalendar to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics,org.controlsfx.controls;
-    opens org.visitCalendar to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics,org.controlsfx.controls;
-
+    opens org.visitCalendar to javafx.base, javafx.fxml, javafx.graphics, org.controlsfx.controls, org.hibernate.orm.core;
+    opens org.visitCalendar.visit to javafx.base, javafx.fxml, javafx.graphics, org.controlsfx.controls, org.hibernate.orm.core;
+    opens org.fxPrint to javafx.base, javafx.fxml, javafx.graphics, org.controlsfx.controls, org.hibernate.orm.core;
 
     exports org;
+
 
 }

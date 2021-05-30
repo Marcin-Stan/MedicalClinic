@@ -1,6 +1,7 @@
 package org.database.employee;
 
 import javafx.scene.control.Alert;
+import org.administrator.employee.AES256;
 import org.employee.EmployeeType;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,11 +27,13 @@ public class Employee {
         sessionFactory = new Configuration().configure().buildSessionFactory();
     }
     public static boolean checkEmployeeLoginAndPassword(String login, String password){
+        String encryptedString = AES256.encrypt(password);
+
         Session session = sessionFactory.openSession();
         if(getEmployeeIdByLogin(login)!=0){
-            String hql = "SELECT e from EmployeeEntity e WHERE e.password = :password and e.id = :id";
+            String hql = "SELECT e from EmployeeEntity e WHERE e.password = :encryptedString and e.id = :id";
             Query<EmployeeEntity> query = session.createQuery(hql,EmployeeEntity.class);
-            query.setParameter("password",password);
+            query.setParameter("encryptedString",encryptedString);
             query.setParameter("id",getEmployeeIdByLogin(login));
 
             EmployeeEntity employeeEntity = null;
@@ -80,6 +83,25 @@ public class Employee {
             employeeEntity = query.getSingleResult();
             EmployeeType employeeType = employeeEntity.getEmployeeType();
             return employeeType;
+        }catch (NoResultException e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            session.close();
+        }
+    }
+
+    public static EmployeeEntity getEmployeeByLogin(String login){
+        Session session = sessionFactory.openSession();
+        String hql = "SELECT e from EmployeeEntity e WHERE e.login = :login";
+        Query<EmployeeEntity> query = session.createQuery(hql,EmployeeEntity.class);
+        query.setParameter("login",login);
+
+        EmployeeEntity employeeEntity = null;
+
+        try{
+            employeeEntity = query.getSingleResult();
+            return employeeEntity;
         }catch (NoResultException e){
             e.printStackTrace();
             return null;

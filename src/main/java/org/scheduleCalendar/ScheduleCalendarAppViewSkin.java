@@ -89,6 +89,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
                 if(calendarEvent.getOldCalendar()!=null && calendarEvent.getSource().equals(scheduleEntry.getCalendar())){
                     ScheduleEntity scheduleEntityTemp = scheduleEntry.getScheduleEntity();
                     scheduleEntityTemp.setDepartment(Department.getDepartmentByName(calendarEvent.getCalendar().getName()));
+                    printTitle(scheduleEntry,scheduleEntry.getScheduleEntity());
                     scheduleEntityCRUD.update(scheduleEntityTemp,true);
                     calendarView.getDayPage().refreshData();
                 }
@@ -106,17 +107,13 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
                             Department.getDepartmentByName(scheduleEntry.getCalendar().getName()));
 
                     scheduleEntityCRUD.save(scheduleEntity[0]);
-                    scheduleEntry.setScheduleEntity(scheduleEntity[0]);
-
-                }
-
-                if(calendarEvent.getEventType().equals(CalendarEvent.ENTRY_FULL_DAY_CHANGED)){
-                    System.out.println(scheduleEntry.isFullDay());
+                    scheduleEntry.setScheduleEntity(scheduleEntity[0],false);
                 }
 
                 if(calendarEvent.getEventType().equals(CalendarEvent.ENTRY_USER_OBJECT_CHANGED)){
                     ScheduleEntity scheduleEntityTemp = scheduleEntry.getScheduleEntity();
                     scheduleEntityTemp.setEmployee(scheduleEntry.getEmployee());
+                    printTitle(scheduleEntry,scheduleEntry.getScheduleEntity());
                     scheduleEntityCRUD.update(scheduleEntityTemp,true);
                     calendarEvent.getEntry().setTitle(scheduleEntityTemp.getEmployee().getFirstName()+" " + scheduleEntityTemp.getEmployee().getLastName());
                     calendarView.getDayPage().getAgendaView().refreshData();
@@ -163,18 +160,27 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
                     scheduleList.get(i).getTimeTo()
             );
 
-            entryList.add(new ScheduleEntry(true));
+            entryList.add(new ScheduleEntry());
             entryList.get(i).setInterval(interval);
             entryList.get(i).setId(String.valueOf(scheduleList.get(i).getId()));
-            entryList.get(i).setScheduleEntity(scheduleList.get(i));
-            entryList.get(i).setEmployee(scheduleList.get(i).getEmployee());
-
+            entryList.get(i).setScheduleEntity(scheduleList.get(i),true);
+            entryList.get(i).setEmployee(scheduleList.get(i).getEmployee(),true);
+            printTitle(entryList.get(i),entryList.get(i).getScheduleEntity());
             if(scheduleList.get(i).getEmployee() != null){
                 entryList.get(i).setTitle(scheduleList.get(i).getEmployee().getFirstName()+" "+ scheduleList.get(i).getEmployee().getLastName());
             }
 
         }
         return entryList;
+    }
+
+    private void printTitle(ScheduleEntry scheduleEntry, ScheduleEntity scheduleEntity){
+        if(scheduleEntity.getEmployee()!=null){
+            scheduleEntry.setTitle(scheduleEntity.getEmployee().getFirstName()+" "+scheduleEntity.getEmployee().getLastName());
+        }else {
+            scheduleEntry.setTitle("Prosze wybrać pracownika");
+        }
+
     }
 
     private static class ScheduleEntryCreateCallback implements Callback<DateControl.CreateEntryParameter, Entry<?>> {

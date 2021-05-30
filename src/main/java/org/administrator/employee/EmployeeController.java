@@ -137,7 +137,6 @@ public class EmployeeController implements Initializable {
         // 5. Add sorted (and filtered) data to the table.
         tableViewEmployee.setItems(sortedData);
 
-
     }
 
 

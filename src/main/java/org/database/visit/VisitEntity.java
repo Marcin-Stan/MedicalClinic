@@ -17,7 +17,6 @@ public class VisitEntity implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     private int id;
 
     @Column(name = "date_start")
@@ -34,6 +33,9 @@ public class VisitEntity implements Serializable {
 
     @Column(name="is_paid")
     private Boolean isPaid;
+
+    @Column(name="is_finished")
+    private Boolean isFinished;
 
     @Column(name = "patient_note")
     private String patientNote;
@@ -65,6 +67,20 @@ public class VisitEntity implements Serializable {
         this.isPaid = isPaid;
         this.patientNote = patientNote;
         this.medicalExamination = medicalExamination;
+        this.service = service;
+        this.employee = employee;
+        this.patient = patient;
+    }
+
+    public VisitEntity(int id, LocalDate startDate, LocalDate endDate, LocalTime timeFrom, LocalTime timeTo, Boolean isPaid, Boolean isFinished,
+                       ServiceEntity service, EmployeeEntity employee, PatientEntity patient) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
+        this.isPaid = isPaid;
+        this.isFinished = isFinished;
         this.service = service;
         this.employee = employee;
         this.patient = patient;
@@ -116,6 +132,14 @@ public class VisitEntity implements Serializable {
 
     public void setPaid(Boolean paid) {
         isPaid = paid;
+    }
+
+    public Boolean getFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(Boolean finished) {
+        isFinished = finished;
     }
 
     public String getPatientNote() {

@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.database.operation.CRUD;
-import org.database.patient.Patient;
 import org.database.patient.PatientEntity;
 import org.employee.Sex;
 import org.table.Add;

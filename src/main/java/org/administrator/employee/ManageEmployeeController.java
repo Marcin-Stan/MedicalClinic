@@ -89,7 +89,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         lastNameTextField.setText(employee.getLastName());
         telNumberTextField.setText(employee.getTelNumber());
         loginTextField.setText(employee.getLogin());
-        passwordTextField.setText(employee.getPassword());
+       // passwordTextField.setText(employee.getPassword());
 
         birthDateDatePicker.setValue(employee.getBirtDate());
         creationDateDatePicker.setValue(employee.getCreationDate());
@@ -169,7 +169,12 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         updatedEmployee.setAddress(addressTextField.getText());
         updatedEmployee.setTelNumber(telNumberTextField.getText());
         updatedEmployee.setLogin(loginTextField.getText());
-        updatedEmployee.setPassword(passwordTextField.getText());
+
+        if(passwordTextField.getText().equals("")){
+            updatedEmployee.setPassword(employee.getPassword());
+        }else{
+            updatedEmployee.setPassword(AES256.encrypt(passwordTextField.getText()));
+        }
 
         if(imagePathTxtField.getText().equals(""))
             updatedEmployee.setPhoto(employee.getPhoto());

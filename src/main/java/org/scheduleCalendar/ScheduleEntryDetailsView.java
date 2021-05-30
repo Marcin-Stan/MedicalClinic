@@ -7,6 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
+import org.employee.EmployeeType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScheduleEntryDetailsView extends EntryDetailsView {
 
@@ -17,9 +21,8 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
     public ScheduleEntryDetailsView(ScheduleEntry entry) {
         super(entry);
 
-        employeeEntityComboBox.getItems().setAll(employeeEntityCRUD.getAll(EmployeeEntity.class));
+        employeeEntityComboBox.getItems().setAll(getMedicalEmployeeFromEmployeeList(employeeEntityCRUD.getAll(EmployeeEntity.class)));
         employeeEntityComboBox.valueProperty().bindBidirectional(entry.getEmployeeProperty());
-
 
         GridPane box = (GridPane) getChildren().get(0);
         Label employee = new Label("Employee");
@@ -40,6 +43,20 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
         box.getChildren().get(0);
 
     }
+
+    private List<EmployeeEntity> getMedicalEmployeeFromEmployeeList(List<EmployeeEntity> employeeEntities){
+        List<EmployeeEntity> medicalEmployeeList = new ArrayList<>();
+
+        for(EmployeeEntity employeeEntity:employeeEntities){
+            if(employeeEntity.getEmployeeType()!=EmployeeType.Administrator){
+                medicalEmployeeList.add(employeeEntity);
+            }
+        }
+
+        return medicalEmployeeList;
+    }
+
+
 
 
 }

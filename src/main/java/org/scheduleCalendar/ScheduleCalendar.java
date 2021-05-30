@@ -4,6 +4,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Interval;
 import org.database.operation.CRUD;
 import org.database.schedule.ScheduleEntity;
+import org.joda.time.DateTime;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -21,12 +22,12 @@ public class ScheduleCalendar extends Calendar {
     public final ScheduleEntry createEntry(ZonedDateTime start, boolean fullDay) {
         int id;
         ScheduleEntry entry;
-        entry = new ScheduleEntry(false);
-        entry.setTitle("Wybierz pracownika");
+        entry = new ScheduleEntry();
+        entry.setTitle("Prosze wybrać pracownika");
         entry.setInterval(new Interval(start.toLocalDate(), start.toLocalTime(), start.toLocalDate(), start.toLocalTime().plusHours(1)));
         entry.setFullDay(fullDay);
         if(scheduleList.isEmpty()) id=0;
-        else id = scheduleList.get(scheduleList.size()-1).getId()+1;
+        else id = Integer.parseInt(DateTime.now().toString("yymmddsss"));
 
         entry.setId(String.valueOf(id));
 

@@ -4,6 +4,7 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Interval;
 import org.database.operation.CRUD;
 import org.database.visit.VisitEntity;
+import org.joda.time.DateTime;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -20,17 +21,20 @@ public class VisitCalendar extends Calendar {
     public final VisitEntry createEntry(ZonedDateTime start, boolean fullDay) {
         int id;
         VisitEntry entry;
-        entry = new VisitEntry(false);
-        entry.setTitle("Uzupelnij dane wizyty");
+        entry = new VisitEntry();
+        entry.setTitle("Prosze uzupelnić wszystkie dane wizyty");
         entry.setInterval(new Interval(start.toLocalDate(), start.toLocalTime(), start.toLocalDate(), start.toLocalTime().plusHours(1)));
         entry.setFullDay(fullDay);
-        if(visitEntityList.isEmpty()) id=0;
-        else id = visitEntityList.get(visitEntityList.size()-1).getId()+1;
-
+        if(visitEntityList.isEmpty())
+            id=0;
+        else
+            id = Integer.parseInt(DateTime.now().toString("yymmddsss"));
         entry.setId(String.valueOf(id));
 
         return entry;
     }
+
+
 
     private String id;
     public final String getId() {

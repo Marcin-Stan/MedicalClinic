@@ -1,18 +1,24 @@
 package org.administrator.patient;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.administrator.employee.AddEmployeeController;
+import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
 import org.database.patient.PatientEntity;
 import org.InitializationTable;
@@ -25,6 +31,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
+
+    @FXML
+    TextField filterTextField;
 
     @FXML
     JFXButton addButton;
@@ -42,10 +51,11 @@ public class PatientController implements Initializable {
 
     Manage<PatientEntity> patientEntityManage = new ManagePatientController();
 
+    private final ObservableList<PatientEntity> dataList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableViewPatient.getColumns().setAll(initTableView().getColumns());
-        initTable.fillTable(tableViewPatient,patientList);
+        fillTableWithFilter();
     }
 
 
@@ -88,6 +98,43 @@ public class PatientController implements Initializable {
     private void setAddButton(){
         Add addPatientController = new AddPatientController();
         initTable.setAddButton("administrator/patient/AddPatient.fxml",addPatientController,stackPanePatient);
+    }
+
+    private void fillTableWithFilter(){
+        dataList.addAll(patientList);
+        FilteredList<PatientEntity> filteredData = new FilteredList<>(dataList, b -> true);
+
+        filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(patient -> {
+                // If filter text is empty, display all persons.
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (patient.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches first name.
+                } else if (patient.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches last name.
+                }
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<PatientEntity> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        // 	  Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty().bind(tableViewPatient.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        tableViewPatient.setItems(sortedData);
+
     }
 
 }

@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.database.employee.Employee;
+import org.database.employee.EmployeeController;
 import org.employee.EmployeeType;
 import org.visitCalendar.Visit;
 
@@ -39,12 +39,12 @@ public class LoginController {
     @FXML
     private void checkPass(){
 
-        if(Employee.checkEmployeeLoginAndPassword(loginField.getText(),passwordField.getText())){
+        if(EmployeeController.checkEmployeeLoginAndPassword(loginField.getText(),passwordField.getText())){
             Stage stage;
             stage = (Stage) loginButton.getScene().getWindow();
             stage.close();
 
-            EmployeeType employeeType = Employee.getEmployeeTypeByLogin(loginField.getText());
+            EmployeeType employeeType = EmployeeController.getEmployeeTypeByLogin(loginField.getText());
 
             switch (employeeType){
                 case Recepcjonistka:
@@ -67,7 +67,7 @@ public class LoginController {
                 case Pielęgniarka:
                 case Lekarz:
                     Stage stage3 = new Stage();
-                    Visit visit1 = new Visit(true,Employee.getEmployeeByLogin(loginField.getText()));
+                    Visit visit1 = new Visit(true, EmployeeController.getEmployeeByLogin(loginField.getText()));
                     visit1.start(stage3);
                     break;
             }

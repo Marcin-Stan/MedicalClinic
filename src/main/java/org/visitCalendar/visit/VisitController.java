@@ -41,13 +41,13 @@ public class VisitController implements Initializable {
 
     Manage<VisitEntity> visitEntityManage = new ManageVisitController();
 
+    private final ObservableList<VisitEntity> dataList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableViewVisit.getColumns().setAll(initTableView().getColumns());
         fillTableWithFilter();
     }
 
-    private final ObservableList<VisitEntity> dataList = FXCollections.observableArrayList();
 
 
     private TableView<VisitEntity> initTableView() {

@@ -20,7 +20,7 @@ import javax.validation.*;
 import java.util.List;
 import java.util.Set;
 
-public class Employee {
+public class EmployeeController {
 
     private static final SessionFactory sessionFactory;
     static {
@@ -63,7 +63,6 @@ public class Employee {
             return id;
         }catch (NoResultException ex) {
             ex.printStackTrace();
-            System.out.println("Nie ma takiego użytkownika");
             return 0;
         }finally {
             session.close();

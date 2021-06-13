@@ -26,7 +26,6 @@ module org {
     opens org.database.service to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
     opens org.database.visit to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
     opens org.database.patient to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
-    opens org.database.drug to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
 
     opens org.administrator to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.employee to org.hibernate.orm.core, javafx.base,javafx.fxml;

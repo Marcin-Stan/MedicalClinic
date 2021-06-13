@@ -38,7 +38,7 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <Label fx:id="imageLabel" layoutX="281.0" layoutY="250.0" opacity="0.5" prefHeight="46.0" prefWidth="113.0" text="Zdjęcie produktu" textAlignment="CENTER" textFill="#006cff" visible="false" />
+      <Label fx:id="imageLabel" layoutX="281.0" layoutY="250.0" opacity="0.5" prefHeight="46.0" prefWidth="113.0" text="Zdjęcie pracownika" textAlignment="CENTER" textFill="#006cff" visible="false" />
       <JFXButton fx:id="addButton" onAction="#addsImage" layoutX="479.0" layoutY="291.0" style="-fx-background-color: #3126c5;" text="Dodaj" textFill="#f8f8f8" visible="false" />
       <TextField fx:id="imagePathTxtField" editable="false" layoutX="281.0" layoutY="288.0" visible="false">
          <font>

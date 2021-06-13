@@ -13,7 +13,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.List;
 
-public class Service {
+public class ServiceController {
 
     private static final SessionFactory sessionFactory;
     static {

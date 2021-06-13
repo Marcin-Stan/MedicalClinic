@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public class Schedule {
+public class ScheduleController {
 
     private static final SessionFactory sessionFactory;
     static {
@@ -37,13 +37,12 @@ public class Schedule {
         query.setParameter("timeTo",timeTo);
         query.setParameter("department",department);
 
-        List<EmployeeEntity> employeeEntities = null;
+        List<EmployeeEntity> employeeEntities;
         try {
             employeeEntities = query.getResultList();
             return employeeEntities;
         }catch (NoResultException ex) {
             ex.printStackTrace();
-            System.out.println("Brak pracownika");
             return null;
         }finally {
             session.close();

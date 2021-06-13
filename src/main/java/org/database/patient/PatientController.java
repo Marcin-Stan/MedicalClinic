@@ -10,7 +10,7 @@ import javax.persistence.NoResultException;
 import javax.validation.*;
 
 
-public class Patient {
+public class PatientController {
 
     private static final SessionFactory sessionFactory;
     static {

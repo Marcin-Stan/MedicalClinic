@@ -11,23 +11,17 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
-import org.database.specialization.Specialization;
 import org.database.specialization.SpecializationEntity;
 import org.employee.EmployeeType;
 import org.employee.Sex;
 import org.image.ImageFx;
 import org.table.Add;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.ResourceBundle;
 
 public class AddEmployeeController implements Initializable, Add {

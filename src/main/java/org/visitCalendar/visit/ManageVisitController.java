@@ -42,8 +42,10 @@ public class ManageVisitController implements Initializable, Manage<VisitEntity>
     public void initData(VisitEntity entity) {
         this.visitEntity = entity;
         textAreaVisit.setWrapText(true);
-        if(!entity.getPatientNote().equals("")){
+        if(entity.getPatientNote()!=null){
             textAreaVisit.setText(entity.getPatientNote());
+        }else{
+            textAreaVisit.setText("Brak notatki");
         }
     }
 

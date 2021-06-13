@@ -8,7 +8,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 
-public class Department {
+public class DepartmentController {
 
     private static final SessionFactory sessionFactory;
     static {

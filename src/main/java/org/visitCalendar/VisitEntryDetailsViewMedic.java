@@ -9,20 +9,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import org.database.department.Department;
+import org.database.department.DepartmentController;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
-import org.database.patient.Patient;
+import org.database.patient.PatientController;
 import org.database.patient.PatientEntity;
-import org.database.schedule.Schedule;
-import org.database.service.Service;
+import org.database.service.ServiceController;
 import org.database.service.ServiceEntity;
 import org.fxPrint.FxPrint;
-import org.validator.AlertValidator;
 
 import java.util.List;
 
@@ -50,7 +47,7 @@ public class VisitEntryDetailsViewMedic extends EntryDetailsView {
         employeeEntityComboBox.valueProperty().bindBidirectional(entry.employeeProperty());
         employeeEntityComboBox.setDisable(true);
 
-        serviceEntityComboBox.getItems().setAll(Service.getServiceByDepartmentName(Department.getDepartmentByName(entry.getCalendar().getName())));
+        serviceEntityComboBox.getItems().setAll(ServiceController.getServiceByDepartmentName(DepartmentController.getDepartmentByName(entry.getCalendar().getName())));
         serviceEntityComboBox.valueProperty().bindBidirectional(entry.serviceProperty());
         serviceEntityComboBox.setDisable(true);
 
@@ -125,7 +122,7 @@ public class VisitEntryDetailsViewMedic extends EntryDetailsView {
                 if(!s.isEmpty())
                 {
                     String pesel = s.replaceAll("\\D+","");
-                    return Patient.getPatientByPeselNumber(pesel);
+                    return PatientController.getPatientByPeselNumber(pesel);
                 }
 
                 return null;

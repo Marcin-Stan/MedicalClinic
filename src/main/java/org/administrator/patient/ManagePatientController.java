@@ -2,22 +2,15 @@ package org.administrator.patient;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import org.database.employee.Employee;
-import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
-import org.database.patient.Patient;
 import org.database.patient.PatientEntity;
 import org.employee.Sex;
-import org.image.ImageFx;
 import org.table.Manage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

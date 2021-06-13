@@ -14,7 +14,6 @@ import java.util.List;
 import javax.validation.constraints.*;
 
 
-@DynamicUpdate()
 @Entity
 @Table(name="employee")
 public class EmployeeEntity implements Serializable {

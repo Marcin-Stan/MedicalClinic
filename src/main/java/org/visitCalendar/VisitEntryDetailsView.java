@@ -11,13 +11,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
-import org.database.department.Department;
+import org.database.department.DepartmentController;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
-import org.database.patient.Patient;
+import org.database.patient.PatientController;
 import org.database.patient.PatientEntity;
-import org.database.schedule.Schedule;
-import org.database.service.Service;
+import org.database.schedule.ScheduleController;
+import org.database.service.ServiceController;
 import org.database.service.ServiceEntity;
 import org.validator.AlertValidator;
 
@@ -46,11 +46,11 @@ public class VisitEntryDetailsView extends EntryDetailsView {
         employeeEntityComboBox.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                employeeEntityComboBox.getItems().setAll(Schedule.getEmployeeByInterval(entry.getStartDate(),
+                employeeEntityComboBox.getItems().setAll(ScheduleController.getEmployeeByInterval(entry.getStartDate(),
                             entry.getEndDate(),
                             entry.getStartTime(),
                             entry.getEndTime(),
-                            Department.getDepartmentByName(entry.getCalendar().getName())));
+                            DepartmentController.getDepartmentByName(entry.getCalendar().getName())));
 
                 if(employeeEntityComboBox.getItems().isEmpty()){
                     AlertValidator.printALert("Błąd",
@@ -62,7 +62,7 @@ public class VisitEntryDetailsView extends EntryDetailsView {
             }
         });
 
-        serviceEntityComboBox.getItems().setAll(Service.getServiceByDepartmentName(Department.getDepartmentByName(entry.getCalendar().getName())));
+        serviceEntityComboBox.getItems().setAll(ServiceController.getServiceByDepartmentName(DepartmentController.getDepartmentByName(entry.getCalendar().getName())));
         serviceEntityComboBox.valueProperty().bindBidirectional(entry.serviceProperty());
 
         setPatientEntityComboBox(entry);
@@ -128,7 +128,7 @@ public class VisitEntryDetailsView extends EntryDetailsView {
                 if(!s.isEmpty())
                 {
                     String pesel = s.replaceAll("\\D+","");
-                    return Patient.getPatientByPeselNumber(pesel);
+                    return PatientController.getPatientByPeselNumber(pesel);
                 }
 
                 return null;

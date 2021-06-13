@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
-import org.database.department.Department;
+import org.database.department.DepartmentController;
 import org.database.department.DepartmentEntity;
 import org.database.operation.CRUD;
 import org.database.schedule.ScheduleEntity;
@@ -88,7 +88,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
 
                 if(calendarEvent.getOldCalendar()!=null && calendarEvent.getSource().equals(scheduleEntry.getCalendar())){
                     ScheduleEntity scheduleEntityTemp = scheduleEntry.getScheduleEntity();
-                    scheduleEntityTemp.setDepartment(Department.getDepartmentByName(calendarEvent.getCalendar().getName()));
+                    scheduleEntityTemp.setDepartment(DepartmentController.getDepartmentByName(calendarEvent.getCalendar().getName()));
                     printTitle(scheduleEntry,scheduleEntry.getScheduleEntity());
                     scheduleEntityCRUD.update(scheduleEntityTemp,true);
                     calendarView.getDayPage().refreshData();
@@ -104,7 +104,7 @@ public class ScheduleCalendarAppViewSkin extends SkinBase<ScheduleCalendarAppVie
                             scheduleEntry.getStartTime(),
                             scheduleEntry.getEndTime(),
                             scheduleEntry.getEmployee(),
-                            Department.getDepartmentByName(scheduleEntry.getCalendar().getName()));
+                            DepartmentController.getDepartmentByName(scheduleEntry.getCalendar().getName()));
 
                     scheduleEntityCRUD.save(scheduleEntity[0]);
                     scheduleEntry.setScheduleEntity(scheduleEntity[0],false);

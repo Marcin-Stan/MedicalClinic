@@ -292,7 +292,7 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
         fromDatabase = true;
         for (int i = 0; i <entryList.size(); i++){
             if (entryList.get(i).getService() != null) {
-                for (int j = 0; i < calendarList.size(); j++) {
+                for (int j = 0; j < calendarList.size(); j++) {
                     if (entryList.get(i).getVisitEntity().getService().getDepartmentEntity().getName().equals(calendarList.get(j).getName())) {
                         calendarList.get(j).addEntry(entryList.get(i));
                         break;
@@ -312,7 +312,7 @@ public class VisitCalendarAppViewSkin extends SkinBase<VisitCalendarAppView> {
         for (int i = 0; i <entryList.size(); i++){
             if(entryList.get(i).getEmployee()!=null && entryList.get(i).getEmployee().getId()==employeeEntity.getId()){
                 if (entryList.get(i).getService() != null) {
-                    for (int j = 0; i < calendarList.size(); j++) {
+                    for (int j = 0; j < calendarList.size(); j++) {
                         if (entryList.get(i).getVisitEntity().getService().getDepartmentEntity().getName().equals(calendarList.get(j).getName())) {
                             calendarList.get(j).addEntry(entryList.get(i));
                             break;

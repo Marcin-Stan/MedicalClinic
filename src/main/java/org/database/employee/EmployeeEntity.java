@@ -248,4 +248,19 @@ public class EmployeeEntity implements Serializable {
         result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmployeeEntity)) return false;
+        EmployeeEntity that = (EmployeeEntity) o;
+        return id == that.id && firstName.equals(that.firstName) && lastName.equals(that.lastName) && address.equals(that.address) && telNumber.equals(that.telNumber) && sex == that.sex && birtDate.equals(that.birtDate) && creationDate.equals(that.creationDate) && login.equals(that.login) && password.equals(that.password) && Arrays.equals(photo, that.photo) && employeeType == that.employeeType && specialization.equals(that.specialization) && Objects.equals(scheduleEntity, that.scheduleEntity) && Objects.equals(listVisit, that.listVisit);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, firstName, lastName, address, telNumber, sex, birtDate, creationDate, login, password, employeeType, specialization, scheduleEntity, listVisit);
+        result = 31 * result + Arrays.hashCode(photo);
+        return result;
+    }
 }

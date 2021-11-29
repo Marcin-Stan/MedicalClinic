@@ -159,7 +159,7 @@ public class PatientEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof PatientEntity)) return false;
         PatientEntity that = (PatientEntity) o;
-        return id == that.id && firstName.equals(that.firstName) && lastName.equals(that.lastName) && address.equals(that.address) && telNumber.equals(that.telNumber) && sex == that.sex && peselNumber.equals(that.peselNumber) && birtDate.equals(that.birtDate) && creationDate.equals(that.creationDate) && listPatient.equals(that.listPatient);
+        return id == that.id && firstName.equals(that.firstName) && lastName.equals(that.lastName) && address.equals(that.address) && telNumber.equals(that.telNumber) && sex == that.sex && peselNumber.equals(that.peselNumber) && birtDate.equals(that.birtDate) && creationDate.equals(that.creationDate) && Objects.equals(listPatient, that.listPatient);
     }
 
     @Override

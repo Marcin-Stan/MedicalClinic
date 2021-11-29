@@ -63,7 +63,7 @@ public class DepartmentEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof DepartmentEntity)) return false;
         DepartmentEntity that = (DepartmentEntity) o;
-        return id == that.id && name.equals(that.name) && serviceEntities.equals(that.serviceEntities) && scheduleList.equals(that.scheduleList);
+        return id == that.id && name.equals(that.name) && Objects.equals(serviceEntities, that.serviceEntities) && Objects.equals(scheduleList, that.scheduleList);
     }
 
     @Override

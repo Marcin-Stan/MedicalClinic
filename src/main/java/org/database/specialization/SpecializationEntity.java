@@ -61,7 +61,7 @@ public class SpecializationEntity implements Serializable {
         if (this == o) return true;
         if (!(o instanceof SpecializationEntity)) return false;
         SpecializationEntity that = (SpecializationEntity) o;
-        return id == that.id && specName.equals(that.specName) && employeeEntity.equals(that.employeeEntity);
+        return id == that.id && specName.equals(that.specName) && Objects.equals(employeeEntity, that.employeeEntity);
     }
 
     @Override

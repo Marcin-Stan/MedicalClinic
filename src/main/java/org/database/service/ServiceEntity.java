@@ -92,4 +92,17 @@ public class ServiceEntity implements Serializable {
     public int hashCode() {
         return Objects.hash(id, name, price, departmentEntity, listVisit);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ServiceEntity)) return false;
+        ServiceEntity that = (ServiceEntity) o;
+        return id == that.id && name.equals(that.name) && price.equals(that.price) && departmentEntity.equals(that.departmentEntity) && Objects.equals(listVisit, that.listVisit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, departmentEntity, listVisit);
+    }
 }

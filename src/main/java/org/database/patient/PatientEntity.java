@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="patient")
@@ -145,5 +146,24 @@ public class PatientEntity implements Serializable {
 
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
+    }
+
+    @Override
+    public String toString() {
+        return firstName+" "+lastName+" "+peselNumber;
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PatientEntity)) return false;
+        PatientEntity that = (PatientEntity) o;
+        return id == that.id && firstName.equals(that.firstName) && lastName.equals(that.lastName) && address.equals(that.address) && telNumber.equals(that.telNumber) && sex == that.sex && peselNumber.equals(that.peselNumber) && birtDate.equals(that.birtDate) && creationDate.equals(that.creationDate) && listPatient.equals(that.listPatient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, address, telNumber, sex, peselNumber, birtDate, creationDate, listPatient);
     }
 }

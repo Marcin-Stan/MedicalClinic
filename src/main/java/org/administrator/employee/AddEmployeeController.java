@@ -11,7 +11,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
-import org.database.specialization.Specialization;
 import org.database.specialization.SpecializationEntity;
 import org.employee.EmployeeType;
 import org.employee.Sex;
@@ -21,6 +20,8 @@ import org.table.Add;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ResourceBundle;
 
 public class AddEmployeeController implements Initializable, Add {
@@ -88,7 +89,7 @@ public class AddEmployeeController implements Initializable, Add {
     }
 
     @FXML
-    public void setSaveButton(){
+    public void setSaveButton() throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         EmployeeEntity newEmploee = new EmployeeEntity();
         newEmploee.setFirstName(firstNameTextField.getText());
@@ -96,7 +97,7 @@ public class AddEmployeeController implements Initializable, Add {
         newEmploee.setAddress(addressTextField.getText());
         newEmploee.setTelNumber(telNumberTextField.getText());
         newEmploee.setLogin(loginTextField.getText());
-        newEmploee.setPassword(passwordTextField.getText());
+        //newEmploee.setPassword(passwordTextField.getText());
         newEmploee.setPhoto(ImageFx.getimage(imagePathTxtField));
         newEmploee.setSpecializationEntity(specializationComboBox.getValue());
         newEmploee.setEmployeeType(roleComboBox.getValue());
@@ -104,13 +105,13 @@ public class AddEmployeeController implements Initializable, Add {
         newEmploee.setCreationDate((creationDateDatePicker.getValue()));
         newEmploee.setBirtDate((birthDateDatePicker.getValue()));
 
-
+        newEmploee.setPassword(AES256.encrypt(passwordTextField.getText()));
         if(employeeEntityCRUD.save(newEmploee)){
 
             try {
                 Stage stage = (Stage) saveButton.getScene().getWindow();
                 stage.close();
-                StackPane pane = FXMLLoader.load(getClass().getResource("Employee.fxml"));
+                StackPane pane = FXMLLoader.load(getClass().getResource("EmployeeView.fxml"));
                 parentStackPane.getChildren().add(pane);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -124,7 +125,5 @@ public class AddEmployeeController implements Initializable, Add {
     public void addsImage() throws MalformedURLException {
         imageFx.addImage(imagePathTxtField,itemImage);
     }
-
-
 
 }

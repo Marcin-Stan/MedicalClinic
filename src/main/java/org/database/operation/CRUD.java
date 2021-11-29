@@ -1,6 +1,7 @@
 package org.database.operation;
 
 import javafx.scene.control.Alert;
+import org.database.HibernateFactory;
 import org.database.patient.PatientEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +20,7 @@ public class CRUD<T> {
     Validator validator = factory.getValidator();
 
     public List<T> getAll(Class<T> type) {
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
 
         try{
             return session.createQuery("FROM "+type.getSimpleName(),type).getResultList();
@@ -31,8 +32,8 @@ public class CRUD<T> {
         return null;
     }
 
-    public void update(T entity){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+    public void update(T entity, boolean showInfo){
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
         String errorMessage="";
         try{
@@ -43,7 +44,9 @@ public class CRUD<T> {
             session.beginTransaction();
             session.update(entity);
             session.getTransaction().commit();
-            AlertValidator.printALert("Informacja","Sukces","Pomyślnie zaktualizowano dane", Alert.AlertType.INFORMATION);
+            if(showInfo) {
+                AlertValidator.printALert("Informacja", "Sukces", "Pomyślnie zaktualizowano dane", Alert.AlertType.INFORMATION);
+            }
         }catch (ConstraintViolationException e){
             AlertValidator.printALert("Błąd","Nie można zaktualizować danych",errorMessage, Alert.AlertType.ERROR);
         }catch (Exception e){
@@ -55,7 +58,7 @@ public class CRUD<T> {
     }
 
     public boolean delete(T entity){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
         try {
             session.beginTransaction();
             session.delete(entity);
@@ -75,12 +78,12 @@ public class CRUD<T> {
     }
 
     public boolean save(T entity){
-        Session session = new Configuration().configure().buildSessionFactory().openSession();
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
         Set<ConstraintViolation<T>> violations = validator.validate(entity);
-        String errorMessage="";
+        StringBuilder errorMessage= new StringBuilder();
         try{
             for (ConstraintViolation<T> violation : violations) {
-                errorMessage+=violation.getMessage()+"\n";
+                errorMessage.append(violation.getMessage()).append("\n");
             }
             session.beginTransaction();
             session.save(entity);
@@ -88,7 +91,7 @@ public class CRUD<T> {
             AlertValidator.printALert("Informacja","Sukces","Utworzono nowy obiekt!", Alert.AlertType.INFORMATION);
             return true;
         }catch (ConstraintViolationException e){
-            AlertValidator.printALert("Błąd","Nie można utworzyć obiektu",errorMessage, Alert.AlertType.ERROR);
+            AlertValidator.printALert("Błąd","Nie można utworzyć obiektu", errorMessage.toString(), Alert.AlertType.ERROR);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.administrator.schedule.Schedule;
+import org.scheduleCalendar.Schedule;
 
 import java.io.IOException;
 import java.net.URL;
@@ -77,7 +77,7 @@ public class DashboardAdministratorController implements Initializable {
 
     @FXML
     private void openWindowUsers() throws IOException {
-        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/employee/Employee.fxml")));
+        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/employee/EmployeeView.fxml")));
         stackPaneinside.getChildren().add(pane);
 
         usersButton.setTextFill(Color.web("#5fa1fc"));
@@ -92,7 +92,7 @@ public class DashboardAdministratorController implements Initializable {
 
     @FXML
     private void openWindowPatients() throws IOException{
-        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/patient/Patient.fxml")));
+        StackPane pane =  FXMLLoader.load((Objects.requireNonNull(getClass().getResource("administrator/patient/Patient.fxml"))));
         stackPaneinside.getChildren().add(pane);
 
         patientButton.setTextFill(Color.web("#5fa1fc"));
@@ -154,14 +154,9 @@ public class DashboardAdministratorController implements Initializable {
     @FXML
     private void openWindowSchedule() throws IOException{
         Stage stage = new Stage();
-        Schedule schedule = new Schedule();
+        Schedule schedule = new Schedule(true);
         schedule.start(stage);
-
     }
-
-
-
-
 
     @FXML
     private void logout(){

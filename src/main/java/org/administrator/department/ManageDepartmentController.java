@@ -74,7 +74,7 @@ public class ManageDepartmentController implements Initializable, Manage<Departm
         updatedDepartment.setId(department.getId());
         updatedDepartment.setName(nameTextField.getText());
 
-        departmentEntityCRUD.update(updatedDepartment);
+        departmentEntityCRUD.update(updatedDepartment,true);
     }
 
 }

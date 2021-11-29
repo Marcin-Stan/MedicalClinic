@@ -11,8 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.database.employee.Employee;
+import org.database.employee.EmployeeController;
 import org.employee.EmployeeType;
+import org.visitCalendar.Visit;
 
 import java.io.IOException;
 
@@ -38,16 +39,18 @@ public class LoginController {
     @FXML
     private void checkPass(){
 
-        if(Employee.checkEmployeeLoginAndPassword(loginField.getText(),passwordField.getText())){
+        if(EmployeeController.checkEmployeeLoginAndPassword(loginField.getText(),passwordField.getText())){
             Stage stage;
             stage = (Stage) loginButton.getScene().getWindow();
             stage.close();
 
-            EmployeeType employeeType = Employee.getEmployeeTypeByLogin(loginField.getText());
+            EmployeeType employeeType = EmployeeController.getEmployeeTypeByLogin(loginField.getText());
 
             switch (employeeType){
-                case Pielęgniarka:
-                    System.out.println(employeeType.getEmployeeType());
+                case Recepcjonistka:
+                    Stage stage2 = new Stage();
+                    Visit visit = new Visit(false,null);
+                    visit.start(stage2);
                     break;
                 case Administrator:
                     Parent root = null;
@@ -60,6 +63,12 @@ public class LoginController {
                     stage.setScene(scene);
                     stage.setResizable(true);
                     stage.show();
+                    break;
+                case Pielęgniarka:
+                case Lekarz:
+                    Stage stage3 = new Stage();
+                    Visit visit1 = new Visit(true, EmployeeController.getEmployeeByLogin(loginField.getText()));
+                    visit1.start(stage3);
                     break;
             }
 

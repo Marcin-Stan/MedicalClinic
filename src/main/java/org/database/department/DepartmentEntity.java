@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="department")
@@ -55,5 +56,18 @@ public class DepartmentEntity implements Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DepartmentEntity)) return false;
+        DepartmentEntity that = (DepartmentEntity) o;
+        return id == that.id && name.equals(that.name) && serviceEntities.equals(that.serviceEntities) && scheduleList.equals(that.scheduleList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, serviceEntities, scheduleList);
     }
 }

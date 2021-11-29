@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPaneEmployee" prefHeight="551.0" prefWidth="1078.0" style="-fx-background-color: #F7F9FB;"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.administrator.employee.EmployeeViewController">
+   <children>
+      <TableView fx:id="tableViewEmployee" prefHeight="538.0" prefWidth="960.0">
+         <StackPane.margin>
+            <Insets bottom="100.0" left="20.0" right="20.0" top="40.0" />
+         </StackPane.margin>
+      </TableView>
+      <Label prefHeight="31.0" prefWidth="321.0" text="Użytkownicy" textFill="#576271" StackPane.alignment="TOP_LEFT">
+         <padding>
+            <Insets left="50.0" top="5.0" />
+         </padding>
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="addButton" onAction="#setAddButton" prefHeight="44.0" prefWidth="112.0" style="-fx-background-color: #4059a9;"
+                 text="Dodaj" StackPane.alignment="BOTTOM_CENTER">
+         <StackPane.margin>
+            <Insets bottom="30.0" />
+         </StackPane.margin>
+      </JFXButton>
+      <TextField fx:id="filterTextField" StackPane.alignment="TOP_CENTER">
+         <StackPane.margin>
+            <Insets left="800.0" right="20.0" top="10.0" />
+         </StackPane.margin>
+      </TextField>
+   </children>
+</StackPane>

@@ -49,7 +49,6 @@ public class InitializationTable<T>{
                                 manage1 = fxmlLoader.getController();
                                 manage1.setParentStackPane(stackPane);
                                 manage1.initData(entity);
-
                                 Stage stage = new Stage();
                                 stage.setTitle("Zarządzanie");
                                 stage.setScene(scene);

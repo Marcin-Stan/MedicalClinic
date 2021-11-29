@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "schedule")
@@ -14,11 +15,13 @@ public class ScheduleEntity implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     private int id;
 
-    @Column(name = "date")
-    private LocalDate date;
+    @Column(name = "date_start")
+    private LocalDate startDate;
+
+    @Column(name = "date_end")
+    private LocalDate endDate;
 
     @Column(name = "time_from")
     private LocalTime timeFrom;
@@ -35,9 +38,10 @@ public class ScheduleEntity implements Serializable {
     private DepartmentEntity department;
 
     public ScheduleEntity(){}
-    public ScheduleEntity(int id, LocalDate date, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
+    public ScheduleEntity(int id,LocalDate startDate,LocalDate endDate, LocalTime timeFrom, LocalTime timeTo, EmployeeEntity employee, DepartmentEntity department) {
         this.id = id;
-        this.date = date;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
         this.employee = employee;
@@ -52,12 +56,20 @@ public class ScheduleEntity implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public LocalTime getTimeFrom() {
@@ -90,5 +102,18 @@ public class ScheduleEntity implements Serializable {
 
     public void setDepartment(DepartmentEntity department) {
         this.department = department;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScheduleEntity)) return false;
+        ScheduleEntity that = (ScheduleEntity) o;
+        return id == that.id && startDate.equals(that.startDate) && endDate.equals(that.endDate) && timeFrom.equals(that.timeFrom) && timeTo.equals(that.timeTo) && employee.equals(that.employee) && department.equals(that.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startDate, endDate, timeFrom, timeTo, employee, department);
     }
 }

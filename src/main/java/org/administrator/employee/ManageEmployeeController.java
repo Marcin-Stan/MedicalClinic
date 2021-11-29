@@ -2,23 +2,19 @@ package org.administrator.employee;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import org.database.employee.EmployeeEntity;
 import org.database.operation.CRUD;
-import org.database.specialization.Specialization;
 import org.database.specialization.SpecializationEntity;
 import org.employee.EmployeeType;
 import org.employee.Sex;
 import org.image.ImageFx;
 import org.table.Manage;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -74,7 +70,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
 
     @FXML
     public void setCloseButton(){
-        setCloseButton(closeButton,"Employee.fxml",parentStackPane);
+        setCloseButton(closeButton,"EmployeeView.fxml",parentStackPane);
     }
 
     public void setParentStackPane(StackPane parentStackPane) {
@@ -89,7 +85,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         lastNameTextField.setText(employee.getLastName());
         telNumberTextField.setText(employee.getTelNumber());
         loginTextField.setText(employee.getLogin());
-        passwordTextField.setText(employee.getPassword());
+       // passwordTextField.setText(employee.getPassword());
 
         birthDateDatePicker.setValue(employee.getBirtDate());
         creationDateDatePicker.setValue(employee.getCreationDate());
@@ -106,7 +102,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
 
     @FXML
     private void setDeleteButton(){
-        setDeleteButton(employeeEntityCRUD,employee,closeButton,parentStackPane,"Employee.fxml");
+        setDeleteButton(employeeEntityCRUD,employee,closeButton,parentStackPane,"EmployeeView.fxml");
     }
 
     @FXML
@@ -169,7 +165,12 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         updatedEmployee.setAddress(addressTextField.getText());
         updatedEmployee.setTelNumber(telNumberTextField.getText());
         updatedEmployee.setLogin(loginTextField.getText());
-        updatedEmployee.setPassword(passwordTextField.getText());
+
+        if(passwordTextField.getText().equals("")){
+            updatedEmployee.setPassword(employee.getPassword());
+        }else{
+            updatedEmployee.setPassword(AES256.encrypt(passwordTextField.getText()));
+        }
 
         if(imagePathTxtField.getText().equals(""))
             updatedEmployee.setPhoto(employee.getPhoto());
@@ -188,7 +189,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
         updatedEmployee.setCreationDate((creationDateDatePicker.getValue()));
         updatedEmployee.setBirtDate((birthDateDatePicker.getValue()));
 
-        employeeEntityCRUD.update(updatedEmployee);
+        employeeEntityCRUD.update(updatedEmployee,true);
 
     }
 

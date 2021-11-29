@@ -15,6 +15,8 @@ module org {
     requires javafx.controls;
     requires com.calendarfx.view;
     requires org.joda.time;
+    requires com.google.common;
+    requires org.kordamp.ikonli.core;
 
     opens org to javafx.fxml,org.hibernate.orm.core;
     opens org.database.specialization to org.hibernate.orm.core, javafx.base;
@@ -24,7 +26,6 @@ module org {
     opens org.database.service to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
     opens org.database.visit to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
     opens org.database.patient to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
-    opens org.database.drug to org.hibernate.orm.core, javafx.base,org.hibernate.validator;
 
     opens org.administrator to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.employee to org.hibernate.orm.core, javafx.base,javafx.fxml;
@@ -32,9 +33,13 @@ module org {
     opens org.administrator.service to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.department to org.hibernate.orm.core, javafx.base,javafx.fxml;
     opens org.administrator.specialization to org.hibernate.orm.core, javafx.base,javafx.fxml;
-    opens org.administrator.schedule to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics,org.controlsfx.controls;
-
+    opens org.visitCalendar.patient to org.hibernate.orm.core, javafx.base,javafx.fxml;
+    opens org.scheduleCalendar to org.hibernate.orm.core, javafx.base,javafx.fxml,javafx.graphics,org.controlsfx.controls;
+    opens org.visitCalendar to javafx.base, javafx.fxml, javafx.graphics, org.controlsfx.controls, org.hibernate.orm.core;
+    opens org.visitCalendar.visit to javafx.base, javafx.fxml, javafx.graphics, org.controlsfx.controls, org.hibernate.orm.core;
+    opens org.fxPrint to javafx.base, javafx.fxml, javafx.graphics, org.controlsfx.controls, org.hibernate.orm.core;
 
     exports org;
+
 
 }

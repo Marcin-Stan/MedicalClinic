@@ -98,7 +98,7 @@ public class ManageServiceController implements Initializable, Manage<ServiceEnt
 
         updatedService.setDepartmentEntity(departmentComboBox.getValue());
 
-        serviceEntityCRUD.update(updatedService);
+        serviceEntityCRUD.update(updatedService,true);
     }
 
 }

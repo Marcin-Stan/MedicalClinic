@@ -8,7 +8,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPaneEmployee" prefHeight="551.0" prefWidth="1078.0" style="-fx-background-color: #F7F9FB;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.administrator.employee.EmployeeController">
+<StackPane fx:id="stackPaneEmployee" prefHeight="551.0" prefWidth="1078.0" style="-fx-background-color: #F7F9FB;"
+           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.administrator.employee.EmployeeViewController">
    <children>
       <TableView fx:id="tableViewEmployee" prefHeight="538.0" prefWidth="960.0">
          <StackPane.margin>
@@ -23,7 +25,8 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <JFXButton fx:id="addButton" onAction="#setAddButton" prefHeight="44.0" prefWidth="112.0" style="-fx-background-color: #4059a9;" text="Dodaj" StackPane.alignment="BOTTOM_CENTER">
+      <JFXButton fx:id="addButton" onAction="#setAddButton" prefHeight="44.0" prefWidth="112.0" style="-fx-background-color: #4059a9;"
+                 text="Dodaj" StackPane.alignment="BOTTOM_CENTER">
          <StackPane.margin>
             <Insets bottom="30.0" />
          </StackPane.margin>

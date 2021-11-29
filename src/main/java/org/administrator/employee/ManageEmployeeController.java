@@ -70,7 +70,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
 
     @FXML
     public void setCloseButton(){
-        setCloseButton(closeButton,"Employee.fxml",parentStackPane);
+        setCloseButton(closeButton,"EmployeeView.fxml",parentStackPane);
     }
 
     public void setParentStackPane(StackPane parentStackPane) {
@@ -102,7 +102,7 @@ public class ManageEmployeeController implements Initializable, Manage<EmployeeE
 
     @FXML
     private void setDeleteButton(){
-        setDeleteButton(employeeEntityCRUD,employee,closeButton,parentStackPane,"Employee.fxml");
+        setDeleteButton(employeeEntityCRUD,employee,closeButton,parentStackPane,"EmployeeView.fxml");
     }
 
     @FXML

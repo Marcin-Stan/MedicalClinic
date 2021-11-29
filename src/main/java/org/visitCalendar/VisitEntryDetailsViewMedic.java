@@ -25,7 +25,6 @@ import java.util.List;
 
 
 public class VisitEntryDetailsViewMedic extends EntryDetailsView {
-    CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
     ComboBox<EmployeeEntity> employeeEntityComboBox = new ComboBox<>();
 
     CRUD<PatientEntity> patientEntityCRUD = new CRUD<>();

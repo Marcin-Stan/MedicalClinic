@@ -25,7 +25,6 @@ import java.util.List;
 
 
 public class VisitEntryDetailsView extends EntryDetailsView {
-        CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
         ComboBox<EmployeeEntity> employeeEntityComboBox = new ComboBox<>();
 
         CRUD<PatientEntity> patientEntityCRUD = new CRUD<>();
@@ -160,7 +159,4 @@ public class VisitEntryDetailsView extends EntryDetailsView {
         patientEntityComboBox.valueProperty().bindBidirectional(entry.patientProperty());
     }
 
-    private void setEmployeeEntityComboBox(VisitEntry entry){
-       // employeeEntityComboBox.addEventHandler();
-    }
 }

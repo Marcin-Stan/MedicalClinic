@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EmployeeController implements Initializable {
+public class EmployeeViewController implements Initializable {
 
     @FXML
     TextField filterTextField;
@@ -42,7 +42,6 @@ public class EmployeeController implements Initializable {
     Manage<EmployeeEntity> employeeEntityManage = new ManageEmployeeController();
     InitializationTable<EmployeeEntity> initTable = new InitializationTable<>();
 
-    //observalble list to store data
     private final ObservableList<EmployeeEntity> dataList = FXCollections.observableArrayList();
 
     @Override
@@ -106,35 +105,29 @@ public class EmployeeController implements Initializable {
 
         filterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(employee -> {
-                // If filter text is empty, display all persons.
 
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
-                // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 if (employee.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
+                    return true;
                 } else if (employee.getLastName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
+                    return true;
                 }
                 else if (String.valueOf(employee.getLogin()).contains(lowerCaseFilter))
                     return true;
                 else
-                    return false; // Does not match.
+                    return false;
             });
         });
 
-        // 3. Wrap the FilteredList in a SortedList.
         SortedList<EmployeeEntity> sortedData = new SortedList<>(filteredData);
 
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        // 	  Otherwise, sorting the TableView would have no effect.
         sortedData.comparatorProperty().bind(tableViewEmployee.comparatorProperty());
 
-        // 5. Add sorted (and filtered) data to the table.
         tableViewEmployee.setItems(sortedData);
 
     }

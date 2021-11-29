@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="manageDepartmentAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="658.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.administrator.department.ManageDepartmentController">
+   <children>
+      <Label layoutX="39.0" layoutY="14.0" opacity="0.5" prefHeight="46.0" prefWidth="113.0" text="Nazwa" textAlignment="CENTER" textFill="#006cff" />
+      <TextField fx:id="nameTextField" disable="true" editable="false" layoutX="38.0" layoutY="48.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Button fx:id="closeButton" layoutX="35.0" layoutY="110.0" mnemonicParsing="false"  onAction="#setCloseButton" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #FCBB31;" text="Wyjdź" textFill="WHITE" />
+      <Button fx:id="saveButton" layoutX="166.0" layoutY="111.0" mnemonicParsing="false" onAction="#setSaveButton" prefHeight="34.0" prefWidth="112.0" style="-fx-background-color: #3126c5;" text="Zapisz" textFill="WHITE" />
+      <JFXButton fx:id="editButton" layoutX="475.0" layoutY="115.0" onAction="#setEditButton" prefHeight="25.0" prefWidth="149.0" style="-fx-background-radius: 20; -fx-background-color: #F7F9FB; -fx-background-insets: 0;" text="Edytuj" textFill="#016dff" />
+      <Button fx:id="deleteButton" layoutX="299.0" layoutY="110.0" mnemonicParsing="false"  onAction="#setDeleteButton" prefHeight="35.0" prefWidth="108.0" style="-fx-background-color: #CE201C;" text="Usuń" textFill="WHITE" />
+   </children>
+</AnchorPane>

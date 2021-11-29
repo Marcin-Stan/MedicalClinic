@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "service")
@@ -78,5 +79,18 @@ public class ServiceEntity implements Serializable {
     public String toString() {
         return name ;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ServiceEntity)) return false;
+        ServiceEntity that = (ServiceEntity) o;
+        return id == that.id && name.equals(that.name) && price.equals(that.price) && departmentEntity.equals(that.departmentEntity) && Objects.equals(listVisit, that.listVisit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, departmentEntity, listVisit);
     }
 }

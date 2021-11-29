@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 @Table(name="visit")
@@ -180,5 +182,20 @@ public class VisitEntity implements Serializable {
 
     public void setPatient(PatientEntity patient) {
         this.patient = patient;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VisitEntity)) return false;
+        VisitEntity that = (VisitEntity) o;
+        return id == that.id && startDate.equals(that.startDate) && endDate.equals(that.endDate) && timeFrom.equals(that.timeFrom) && timeTo.equals(that.timeTo) && isPaid.equals(that.isPaid) && isFinished.equals(that.isFinished) && patientNote.equals(that.patientNote) && Arrays.equals(medicalExamination, that.medicalExamination) && service.equals(that.service) && employee.equals(that.employee) && patient.equals(that.patient);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, startDate, endDate, timeFrom, timeTo, isPaid, isFinished, patientNote, service, employee, patient);
+        result = 31 * result + Arrays.hashCode(medicalExamination);
+        return result;
     }
 }

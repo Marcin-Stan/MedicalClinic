@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "schedule")
@@ -101,5 +102,18 @@ public class ScheduleEntity implements Serializable {
 
     public void setDepartment(DepartmentEntity department) {
         this.department = department;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ScheduleEntity)) return false;
+        ScheduleEntity that = (ScheduleEntity) o;
+        return id == that.id && startDate.equals(that.startDate) && endDate.equals(that.endDate) && timeFrom.equals(that.timeFrom) && timeTo.equals(that.timeTo) && employee.equals(that.employee) && department.equals(that.department);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startDate, endDate, timeFrom, timeTo, employee, department);
     }
 }

@@ -111,7 +111,7 @@ public class AddEmployeeController implements Initializable, Add {
             try {
                 Stage stage = (Stage) saveButton.getScene().getWindow();
                 stage.close();
-                StackPane pane = FXMLLoader.load(getClass().getResource("Employee.fxml"));
+                StackPane pane = FXMLLoader.load(getClass().getResource("EmployeeView.fxml"));
                 parentStackPane.getChildren().add(pane);
             } catch (IOException e) {
                 e.printStackTrace();

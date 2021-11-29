@@ -77,7 +77,7 @@ public class DashboardAdministratorController implements Initializable {
 
     @FXML
     private void openWindowUsers() throws IOException {
-        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/employee/Employee.fxml")));
+        StackPane pane =  FXMLLoader.load((getClass().getResource("administrator/employee/EmployeeView.fxml")));
         stackPaneinside.getChildren().add(pane);
 
         usersButton.setTextFill(Color.web("#5fa1fc"));

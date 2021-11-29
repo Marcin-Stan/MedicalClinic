@@ -17,7 +17,6 @@ public class ScheduleEntryDetailsView extends EntryDetailsView {
     CRUD<EmployeeEntity> employeeEntityCRUD = new CRUD<>();
     ComboBox<EmployeeEntity> employeeEntityComboBox = new ComboBox<>();
 
-
     public ScheduleEntryDetailsView(ScheduleEntry entry) {
         super(entry);
 

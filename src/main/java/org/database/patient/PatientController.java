@@ -1,5 +1,6 @@
 package org.database.patient;
 
+import org.database.HibernateFactory;
 import org.database.department.DepartmentEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,13 +13,9 @@ import javax.validation.*;
 
 public class PatientController {
 
-    private static final SessionFactory sessionFactory;
-    static {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
 
     public static PatientEntity getPatientByPeselNumber(String peselNumber){
-        Session session = sessionFactory.openSession();
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
         String hql = "SELECT pe from PatientEntity pe WHERE pe.peselNumber = :peselNumber";
         Query<PatientEntity> query = session.createQuery(hql,PatientEntity.class);
         query.setParameter("peselNumber",peselNumber);

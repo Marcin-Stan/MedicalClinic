@@ -1,5 +1,6 @@
 package org.database.schedule;
 
+import org.database.HibernateFactory;
 import org.database.department.DepartmentEntity;
 import org.database.employee.EmployeeEntity;
 import org.hibernate.Session;
@@ -14,16 +15,11 @@ import java.util.List;
 
 public class ScheduleController {
 
-    private static final SessionFactory sessionFactory;
-    static {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
-
     public static List<EmployeeEntity> getEmployeeByInterval(LocalDate startDate, LocalDate endDate,
                                                              LocalTime timeFrom, LocalTime timeTo,
                                                              DepartmentEntity department){
 
-        Session session = sessionFactory.openSession();
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
         String hql = "SELECT se.employee from ScheduleEntity se WHERE se.startDate = :startDate " +
                 "and se.endDate=:endDate " +
                 "and se.timeFrom < :timeFrom  " +
@@ -37,12 +33,13 @@ public class ScheduleController {
         query.setParameter("timeTo",timeTo);
         query.setParameter("department",department);
 
-        List<EmployeeEntity> employeeEntities;
+        List<EmployeeEntity> employeeEntities = null;
         try {
             employeeEntities = query.getResultList();
             return employeeEntities;
         }catch (NoResultException ex) {
             ex.printStackTrace();
+            System.out.println("Brak pracownika");
             return null;
         }finally {
             session.close();

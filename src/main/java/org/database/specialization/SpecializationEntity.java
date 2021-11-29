@@ -5,6 +5,7 @@ import org.database.employee.EmployeeEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -53,5 +54,18 @@ public class SpecializationEntity implements Serializable {
     public String toString() {
         return specName;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SpecializationEntity)) return false;
+        SpecializationEntity that = (SpecializationEntity) o;
+        return id == that.id && specName.equals(that.specName) && employeeEntity.equals(that.employeeEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, specName, employeeEntity);
     }
 }

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPanedashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="761.0" prefWidth="1267.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.DashboardAdministratorController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <left>
+            <VBox prefHeight="543.0" prefWidth="149.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="homeScreenButton" prefHeight="70.0" prefWidth="225.0" text="Ekran główny" textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/dashboard.png" />
+                           </image></ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="usersButton" layoutX="10.0" layoutY="10.0" onAction="#openWindowUsers" prefHeight="70.0" prefWidth="225.0" text="Użytkownicy " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/employees.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="patientButton" layoutX="10.0" layoutY="80.0" onAction="#openWindowPatients" prefHeight="70.0" prefWidth="225.0" text="Pacjenci     " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/patient.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="serviceButton" layoutX="10.0" layoutY="150.0" onAction="#openWindowService" prefHeight="70.0" prefWidth="225.0" text="Usługi         " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/Service.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="departmentButton" layoutX="10.0" layoutY="220.0" onAction="#openWindowDepartment" prefHeight="70.0" prefWidth="225.0" text="Gabinety    " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/doctorOffice.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="specializationButton" layoutX="10.0" layoutY="290.0" onAction="#openWindowSpecialization" prefHeight="70.0" prefWidth="225.0" text="Specjalizacje" textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/special.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="scheduleButton" onAction="#openWindowSchedule" layoutX="10.0" layoutY="360.0" prefHeight="70.0" prefWidth="225.0" text="Grafik        " textFill="#576271">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/schedule.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <StackPane fx:id="stackPaneinside" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #F7F9FB;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="welcomeLabel" alignment="CENTER" prefHeight="336.0" prefWidth="759.0" text="Witaj" textAlignment="CENTER">
+                     <font>
+                        <Font size="73.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+         </center>
+         <top>
+            <StackPane prefHeight="52.0" prefWidth="1267.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="53.0" prefWidth="153.0" text="  Medical Clinic" textFill="#5fa1fc" StackPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </Label>
+                  <JFXButton fx:id="myAccountButton" alignment="CENTER" disable="true" prefHeight="45.0" prefWidth="103.0" text="Moje Konto" visible="false" StackPane.alignment="TOP_RIGHT">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/profile.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <StackPane.margin>
+                        <Insets right="250.0" top="5.0" />
+                     </StackPane.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="logoutButton" alignment="CENTER" disable="true" onAction="#logout" prefHeight="45.0" prefWidth="83.0" text="Wyloguj" visible="false" StackPane.alignment="TOP_RIGHT">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@graphics/logout.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <StackPane.margin>
+                        <Insets right="150.0" top="5.0" />
+                     </StackPane.margin>
+                  </JFXButton>
+                  <ImageView fx:id="userInfo" fitHeight="35.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
+                     <image>
+                        <Image url="@graphics/user.png" />
+                     </image>
+                     <StackPane.margin>
+                        <Insets right="80.0" top="13.0" />
+                     </StackPane.margin>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
+                     <image>
+                        <Image url="@graphics/bell.png" />
+                     </image>
+                     <StackPane.margin>
+                        <Insets right="40.0" top="15.0" />
+                     </StackPane.margin>
+                  </ImageView>
+               </children>
+            </StackPane>
+         </top>
+      </BorderPane>
+   </children>
+</StackPane>

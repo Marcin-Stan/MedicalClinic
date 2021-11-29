@@ -1,5 +1,6 @@
 package org.database.service;
 
+import org.database.HibernateFactory;
 import org.database.department.DepartmentEntity;
 import org.database.patient.PatientEntity;
 import org.hibernate.Session;
@@ -15,13 +16,9 @@ import java.util.List;
 
 public class ServiceController {
 
-    private static final SessionFactory sessionFactory;
-    static {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
 
     public static List<ServiceEntity> getServiceByDepartmentName(DepartmentEntity departmentEntity){
-        Session session = sessionFactory.openSession();
+        Session session = HibernateFactory.getCurrentSessionFromConfig();
         String hql = "SELECT se from ServiceEntity se WHERE se.departmentEntity = :departmentEntity";
         Query<ServiceEntity> query = session.createQuery(hql,ServiceEntity.class);
         query.setParameter("departmentEntity",departmentEntity);
